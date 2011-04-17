@@ -99,7 +99,7 @@ public class uraActivity extends Activity implements OnClickListener {
 
 		if (requestCode==Vreme_ACTIVITY_ID)
 		{
-			/*if(resultCode==0)  //dsf
+			/*if(resultCode==0)  //dsfbn
 				{
 				
 				finish();
