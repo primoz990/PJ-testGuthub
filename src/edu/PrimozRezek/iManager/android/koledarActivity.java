@@ -1,6 +1,5 @@
 package edu.PrimozRezek.iManager.android;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class uraActivity extends Activity implements OnClickListener {
+
+public class koledarActivity extends Activity implements OnClickListener {
 	
-	private static final int Vreme_ACTIVITY_ID = 1;
+	
 	//gumbi za preklaplanje med activity
 	Button gumbUra;
 	Button gumbVreme;
@@ -30,7 +29,7 @@ public class uraActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ura);
+        setContentView(R.layout.koledar);
         
         
         gumbUra = (Button) findViewById(R.id.gumbUra);
@@ -61,7 +60,9 @@ public class uraActivity extends Activity implements OnClickListener {
 		switch(v.getId())
 		{
 		case R.id.gumbUra:
-
+			finish();
+			Intent uraAct = new Intent(this, uraActivity.class);
+			this.startActivity(uraAct);
 		break;
 		case R.id.gumbVreme:
 			finish();
@@ -76,9 +77,8 @@ public class uraActivity extends Activity implements OnClickListener {
 			this.startActivity(rssAct);
 		break;
 		case R.id.gumbKoledar:
-			finish();
-			Intent koledarAct = new Intent(this, koledarActivity.class);
-			this.startActivity(koledarAct);
+
+			
 		break;
 		case R.id.gumbNastavitve:
 			finish();
@@ -91,35 +91,4 @@ public class uraActivity extends Activity implements OnClickListener {
 		
 		
 	}
-	
-	
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-
-		if (requestCode==Vreme_ACTIVITY_ID)
-		{
-			/*if(resultCode==0)  //dsfbng
-				{
-				
-				finish();
-				}
-			if(resultCode==-1) 
-			{
-				VnosnoPolje.setText("");
-				infoStevec.setText("");
-				if(custom==true)
-				{
-					sp.setEnabled(true);
-					zg.setEnabled(true);
-				}
-			}*/
-		}
-	}
-	
-	
-	
-	
-    
-    
 }

@@ -1,13 +1,14 @@
 package edu.PrimozRezek.iManager.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class RssActivity extends uraActivity implements OnClickListener  
+
+public class RssActivity extends Activity implements OnClickListener  
 {
 
 	
@@ -56,13 +57,13 @@ public class RssActivity extends uraActivity implements OnClickListener
 		switch(v.getId())
 		{
 		case R.id.gumbUra:
-		
+			finish();
 			Intent uraAct = new Intent(this, uraActivity.class);
 			this.startActivity(uraAct);
 
 		break;
 		case R.id.gumbVreme:
-
+			finish();
 			Intent vremeAct = new Intent(this, vremeActivity.class);
 			this.startActivity(vremeAct);
 			
@@ -72,12 +73,14 @@ public class RssActivity extends uraActivity implements OnClickListener
 
 		break;
 		case R.id.gumbKoledar:
-			Toast toast4 = Toast.makeText(this,"KOLEDAR!" , Toast.LENGTH_LONG);
-        	toast4.show();
+			finish();
+			Intent koledarAct = new Intent(this, koledarActivity.class);
+			this.startActivity(koledarAct);
 		break;
 		case R.id.gumbNastavitve:
-			Toast toast5 = Toast.makeText(this,"NASTAVITVE!" , Toast.LENGTH_LONG);
-        	toast5.show();
+			finish();
+			Intent nastavitveAct = new Intent(this, nastavitveActivity.class);
+			this.startActivity(nastavitveAct);
 		break;
 			
 		
