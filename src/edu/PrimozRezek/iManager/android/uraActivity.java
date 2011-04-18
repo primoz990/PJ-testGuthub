@@ -81,7 +81,7 @@ public class uraActivity extends Activity implements OnClickListener {
 			this.startActivity(koledarAct);
 		break;
 		case R.id.gumbNastavitve:
-			finish();
+			finish();//jj
 			Intent nastavitveAct = new Intent(this, nastavitveActivity.class);
 			this.startActivity(nastavitveAct);
 		break;
