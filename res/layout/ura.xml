@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     android:id="@+id/mainLL">
     <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="150dip" android:layout_weight="7">
+        <AnalogClock android:id="@+id/analogClock1" android:layout_width="wrap_content" android:layout_height="wrap_content"></AnalogClock>
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">
         <Button android:layout_height="wrap_content" android:id="@+id/button2" android:text="Bujenje" android:layout_width="wrap_content" android:layout_weight="1"></Button>
