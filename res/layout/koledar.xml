@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <Button android:id="@+id/gumbUra" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="Ura"></Button>
-        <Button android:id="@+id/gumbVreme" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="Vreme"></Button>
-        <Button android:id="@+id/gumbRss" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="RSS"></Button>
-        <Button android:id="@+id/gumbKoledar" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="Koledar"></Button>
-        <Button android:id="@+id/gumbNastavitve" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="Nastavitve"></Button>
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/mainLL">
+    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tukaj bo koledar in opravila"></TextView>
     </LinearLayout>
 </LinearLayout>

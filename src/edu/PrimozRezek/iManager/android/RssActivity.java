@@ -4,44 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 public class RssActivity extends Activity implements OnClickListener  
 {
-
-	
+	public static final int id=4;
 	//gumbi za preklaplanje med activity
-	Button gumbUra;
-	Button gumbVreme;
-	Button gumbRss;
-	Button gumbKoledar;
-	Button gumbNastavitve;
-	
-	
-	
-	
-	
+	Gumbi g;
+
+	LinearLayout mainLL;
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vreme);
+        setContentView(R.layout.rss);
         
-        
-        gumbUra = (Button) findViewById(R.id.gumbUra);
-        gumbVreme = (Button) findViewById(R.id.gumbVreme);
-        gumbRss = (Button) findViewById(R.id.gumbRss);
-        gumbKoledar = (Button) findViewById(R.id.gumbKoledar);
-        gumbNastavitve = (Button) findViewById(R.id.gumbNastavitve);
-        
-        gumbUra.setOnClickListener(this);
-        gumbVreme.setOnClickListener(this);
-        gumbRss.setOnClickListener(this);
-        gumbKoledar.setOnClickListener(this);
-        gumbNastavitve.setOnClickListener(this);
+        g = new Gumbi( this, id);
+        mainLL = (LinearLayout) findViewById(R.id.mainLL);
+        mainLL.addView(g,0);
         
         
     }
@@ -54,37 +40,7 @@ public class RssActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v) 
 	{
-		switch(v.getId())
-		{
-		case R.id.gumbUra:
-			finish();
-			Intent uraAct = new Intent(this, uraActivity.class);
-			this.startActivity(uraAct);
-
-		break;
-		case R.id.gumbVreme:
-			finish();
-			Intent vremeAct = new Intent(this, vremeActivity.class);
-			this.startActivity(vremeAct);
-			
-		break;
-		case R.id.gumbRss:
-			
-
-		break;
-		case R.id.gumbKoledar:
-			finish();
-			Intent koledarAct = new Intent(this, koledarActivity.class);
-			this.startActivity(koledarAct);
-		break;
-		case R.id.gumbNastavitve:
-			finish();
-			Intent nastavitveAct = new Intent(this, nastavitveActivity.class);
-			this.startActivity(nastavitveAct);
-		break;
-			
 		
-		}
 		
 		
 	}
