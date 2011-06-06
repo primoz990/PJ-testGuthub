@@ -1,11 +1,16 @@
 package edu.PrimozRezek.iManager.android;
 
 
+import java.sql.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AnalogClock;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +23,8 @@ public class uraActivity extends Activity implements OnClickListener {
 	Gumbi g;
 
 	LinearLayout mainLL;
-	
+	AnalogClock ura;
+	TextView textViev1;
 	
     
     @Override
@@ -27,10 +33,13 @@ public class uraActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ura);
         
+        textViev1 = (TextView) findViewById(R.id.textView1);
         g = new Gumbi( this, id);
         mainLL = (LinearLayout) findViewById(R.id.mainLL);
         mainLL.addView(g,0);
-        
+        ura = new AnalogClock(this);
+		
+		
         
     }
 
@@ -42,8 +51,12 @@ public class uraActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) 
 	{
+		Date dt = new Date(2001, 2, 2);
+        int hours = dt.getHours();
+        int minutes = dt.getMinutes();
 
 		
+        textViev1.setText(hours+":"+minutes);
 		
 	}
 	

@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, glavnaActivity!</string>
     <string name="app_name">iManager</string>
+    <color name="bela">#fff</color>
 </resources>
