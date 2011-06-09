@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class RssActivity extends Activity implements OnClickListener
 	LinearLayout mainLL;
 	TextView textViev2;
 
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -42,8 +44,12 @@ public class RssActivity extends Activity implements OnClickListener
         mainLL.addView(g,0);
         
         textViev2=(TextView) findViewById(R.id.textView2);
+     
         
-
+        
+        
+        
+        
         
         try
 		{
@@ -56,7 +62,7 @@ public class RssActivity extends Activity implements OnClickListener
 		
 		int zacetek=0;
 		int konec=0;
-		for(int i=0; i<8; i++)
+		for(int i=0; i<10; i++)
 		{
 		zacetek =	stran.indexOf("<title>", zacetek+1);
 		konec = stran.indexOf("</title>", konec+1);
@@ -89,6 +95,11 @@ public class RssActivity extends Activity implements OnClickListener
 				nova2+='Š';
 				i+=5;
 			}
+			else if (vmes[0]=='&' && vmes[1]=='#' && vmes[2]=='2' && vmes[3]=='6' && vmes[4]=='8' && vmes[5]==';')
+			{
+				nova2+='Č';
+				i+=5;
+			}
 			else if (vmes[0]=='&' && vmes[1]=='#' && vmes[2]=='2' && vmes[3]=='6' && vmes[4]=='9' && vmes[5]==';')
 			{
 				nova2+='č';
@@ -119,7 +130,7 @@ public class RssActivity extends Activity implements OnClickListener
 		nova2+=vmes[5];
 		
 		
-		textViev2.setText(nova2);
+		textViev2.setText("\n"+nova2);
 		
 		}
 		catch (Exception eee) 

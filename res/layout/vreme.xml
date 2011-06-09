@@ -4,10 +4,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/mainLL">
-    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="40dip">
+    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="10dip">
     </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_gravity="center" android:gravity="center" android:layout_height="140dip">
+    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_gravity="center" android:gravity="center" android:layout_height="150dip">
+        <ImageView android:id="@+id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon"></ImageView>
         <TextView android:layout_gravity="center" android:layout_width="wrap_content" android:id="@+id/textView1" android:text="Maribor:" android:layout_height="wrap_content" android:gravity="center"></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout5" android:layout_height="wrap_content" android:orientation="vertical">
+        <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout7" android:layout_height="wrap_content" android:gravity="center">
+            <ImageView android:id="@+id/imageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+            <ImageView android:id="@+id/imageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+            <ImageView android:id="@+id/imageView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/linearLayout6" android:layout_height="match_parent" android:layout_width="match_parent" android:gravity="center">
+            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView3" android:text="TextView" android:layout_height="wrap_content"></TextView>
+            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView4" android:text="TextView" android:layout_height="wrap_content"></TextView>
+            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView5" android:text="TextView" android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="wrap_content">
         <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Napoved:"></TextView>

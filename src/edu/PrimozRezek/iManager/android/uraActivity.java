@@ -2,10 +2,12 @@ package edu.PrimozRezek.iManager.android;
 
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.view.View;
@@ -39,8 +41,13 @@ public class uraActivity extends Activity implements OnClickListener {
         mainLL.addView(g,0);
         ura = new AnalogClock(this);
 		
-		
         
+        //prikaz datuma
+        Calendar a= Calendar.getInstance();
+        int x= a.getTime().getDate();
+        int c = a.getTime().getMonth();
+
+        textViev1.setText(x+"/"+c);
     }
 
 
