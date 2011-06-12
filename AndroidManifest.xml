@@ -36,6 +36,13 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".KoledarDodajDogodekActivity" android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="iManager - Dodaj Dogodek">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <activity android:name=".nastavitveActivity" android:theme="@android:style/Theme.NoTitleBar"
                   android:label="iManager - Nastavitve">
             <intent-filter>
