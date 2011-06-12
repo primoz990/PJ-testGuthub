@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/mainLL">
+    android:id="@+id/mainLL" android:background="@drawable/ozadje">
     <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="50dip" android:gravity="center">
         <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:text="UM FERI - Novice na oglasni deski" android:textSize="18px"></TextView>
     </LinearLayout>

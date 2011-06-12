@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/mainLL">
+    android:id="@+id/mainLL" android:background="@drawable/ozadje">
     <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
         <Button android:layout_height="wrap_content" android:id="@+id/button1" android:text="Dodaj Dogodek" android:layout_width="wrap_content" android:onClick="onClick"></Button>
         <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tukaj bo koledar in opravila"></TextView>
