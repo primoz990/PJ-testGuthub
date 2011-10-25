@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.text.format.Time;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AnalogClock;
@@ -38,7 +39,6 @@ public class uraActivity extends Activity implements OnClickListener {
 	
 	TimePickerDialog TpD1;
 
-	
 	
     
     @Override
