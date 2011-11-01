@@ -11,13 +11,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -62,7 +58,7 @@ public class RssActivity extends Activity implements OnClickListener
 		
 		int zacetek=0;
 		int konec=0;
-		for(int i=0; i<10; i++)
+		for(int i=0; i<5; i++)
 		{
 		zacetek =	stran.indexOf("<title>", zacetek+1);
 		konec = stran.indexOf("</title>", konec+1);
@@ -132,10 +128,12 @@ public class RssActivity extends Activity implements OnClickListener
 		
 		textViev2.setText("\n"+nova2);
 		
+	
 		}
 		catch (Exception eee) 
 		{
 			textViev2.setText("Napaka! Potrebujete dostop do interneta!");
+			//textViev2.setText(eee.toString());
 		}
 
     }

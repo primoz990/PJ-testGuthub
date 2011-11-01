@@ -1,34 +1,30 @@
 package edu.PrimozRezek.iManager.android;
 
 
-import java.sql.Date;
-import java.util.Calendar;
 
+import java.util.Calendar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.text.format.DateFormat;
-import android.text.format.Time;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AnalogClock;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
+import android.widget.TimePicker.OnTimeChangedListener;
+
 
 public class uraActivity extends Activity implements OnClickListener {
 	
 
 	public static final int id=1;
 	private static final int TIME_DIALOG_ID = 0;
+    public int uraa= 12;
+    public int minutaa = 13;
 	//gumbi za preklaplanje med activity
 	Gumbi g;
 
@@ -37,7 +33,7 @@ public class uraActivity extends Activity implements OnClickListener {
 	TextView textViev1;
 	CheckBox checkBox1, checkBox2, checkBox3;
 	
-	TimePickerDialog TpD1;
+
 
 	
     
@@ -67,9 +63,9 @@ public class uraActivity extends Activity implements OnClickListener {
         
         
     }
+    
 
-    public int uraa;
-    public int minutaa;
+
 
     private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener()
     {
@@ -78,7 +74,12 @@ public class uraActivity extends Activity implements OnClickListener {
     		uraa = hourOfDay;
     		minutaa = minute;
     	}
+    	
+    	
+    	
     };
+		
+		
     
     
     @Override
@@ -88,9 +89,13 @@ public class uraActivity extends Activity implements OnClickListener {
 	    {
 	    case TIME_DIALOG_ID:
 	    return new TimePickerDialog(this, mTimeSetListener, 07, 00, true);
+	    
+	    
 	    }
 	    return null;
     }
+    
+    
     
     
 
@@ -101,6 +106,7 @@ public class uraActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) 
 	{
+	
 		switch(v.getId())
 		{
 		case R.id.button2: 
@@ -130,6 +136,7 @@ public class uraActivity extends Activity implements OnClickListener {
 	        checkBox3.setChecked(true);
 	
 		break;
+		
 		
 		
 		}

@@ -1,31 +1,23 @@
 package edu.PrimozRezek.iManager.android;
 
-import java.io.BufferedInputStream;
+
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-
-import android.R.drawable;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -125,8 +117,6 @@ public class vremeActivity extends Activity implements OnClickListener
 		
 			
 			
-			
-			
 			//NAPOVED
 			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_d1-d2_text.html");
 			
@@ -189,6 +179,7 @@ public class vremeActivity extends Activity implements OnClickListener
 				
 			    nova+=napoved.charAt(i);
 				}
+				
 
 			}
 
@@ -216,7 +207,7 @@ public class vremeActivity extends Activity implements OnClickListener
 				
 				if(i>0) //prvo napoved izpustimo
 				{
-					dan[i-1] = 	stran.substring(zacetek+11, stran.indexOf("CEST</valid_day>", zacetek));
+					dan[i-1] = 	stran.substring(zacetek+11, stran.indexOf("</valid_day>", zacetek)-3);
 					situacija[i-1]= stran.substring(stran.indexOf("<nn_shortText>", zacetek)+14, stran.indexOf("</nn_shortText>", zacetek));
 					Tmin[i-1]= 	stran.substring(stran.indexOf("<tn>", zacetek)+4, stran.indexOf("</tn>", zacetek));
 					Tmax[i-1]= 	stran.substring(stran.indexOf("<tx>", zacetek)+4, stran.indexOf("</tx>", zacetek));
@@ -257,14 +248,8 @@ public class vremeActivity extends Activity implements OnClickListener
 			catch (Exception eee) 
 			{
 				textViev1.setText("Napaka! Potrebujete dostop do interneta!");
+				
 			}
-			
-			
-
-			
-			
-			
-			
 			
 	
 		}
