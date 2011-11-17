@@ -33,6 +33,7 @@ public class koledarActivity extends Activity implements OnClickListener {
 	
 	TextView text1;	
 	
+	//Button dodajDog, pretvValut;
 	
     
     @Override
@@ -49,7 +50,10 @@ public class koledarActivity extends Activity implements OnClickListener {
         
         text1 = (TextView) findViewById(R.id.textView1);
         
+        //dodajDog = (Button) findViewById(R.id.buttonDodajDogodek);
+        //pretvValut = (Button) findViewById(R.id.Pretvornikbutton);
 
+        
         
     }
 
@@ -72,8 +76,21 @@ public class koledarActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) 
 	{
-		Intent dodajAct = new Intent(this, KoledarDodajDogodekActivity.class);
-		this.startActivity(dodajAct);
+		switch (v.getId()) 
+		{
+			case R.id.buttonDodajDogodek:
+	
+				Intent dodajAct = new Intent(this, KoledarDodajDogodekActivity.class);
+				this.startActivity(dodajAct);
+				
+			break;
+			case R.id.Pretvornikbutton:
+				Intent dodajPrAct = new Intent(this, PretvornikValutActivity.class);
+				this.startActivity(dodajPrAct);
+			break;
+		}
+
+		
 	}
 	
 	public void fillFromDB() {

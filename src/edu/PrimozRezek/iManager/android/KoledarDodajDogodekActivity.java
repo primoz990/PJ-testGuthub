@@ -48,9 +48,7 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
 		x.setNaslovDogodka(editText1.getText().toString());
 		x.setOpisDogodka(editText2.getText().toString());
 		
-		
 		addDB(x);
-		
 		finish();
 	}
 	

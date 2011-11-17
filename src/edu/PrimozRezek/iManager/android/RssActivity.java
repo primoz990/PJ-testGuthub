@@ -1,17 +1,28 @@
 package edu.PrimozRezek.iManager.android;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
+import org.htmlcleaner.XPatherException;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -27,7 +38,19 @@ public class RssActivity extends Activity implements OnClickListener
 	LinearLayout mainLL;
 	TextView textViev2;
 
-
+	public void shranivdat(String doc) //http://www.roseindia.net/java/beginners/java-write-to-file.shtml
+	 {
+		try
+		{
+			FileWriter fstream = new FileWriter("/data/izhodHTML.html");
+			BufferedWriter out = new BufferedWriter(fstream);
+			out.write(doc);
+			out.close();
+		}catch (Exception e)
+		{
+			System.err.println("Napaka: " + e.getMessage());
+		}
+	 }
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -44,7 +67,36 @@ public class RssActivity extends Activity implements OnClickListener
         
         
         
+       // String html = getHTML("http://www.feri.uni-mb.si/rss/novice.xml");
+       // shranivdat(html);
+        TagNode xml = xmlCleaner("http://www.feri.uni-mb.si/rss/novice.xml");
+        TagNode Naslov= findInfo(xml, "//title", 0);
+        textViev2.setText(Naslov.getText().toString());
+		//String novice="";
         
+		/*for(int i=0; i<5; i++)
+		{
+			TagNode naslov = findInfo(xml, "//title", i);
+			TagNode link = findInfo(xml, "//link", i);
+			TagNode opis = findInfo(xml, "//description", i);
+			TagNode avtor = findInfo(xml, "//author", i);
+			
+			novice += naslov.getText().toString();
+			novice += link.getText().toString();
+			novice += opis.getText().toString();
+			novice += avtor.getText().toString()+" = ";
+			novice +="\n----------------------------\n";
+		}*/
+        
+		//TagNode bbb = findInfo(xml, "//*", 0);
+		//novice = bbb.getText().toString();
+		
+		
+		
+        //textViev2.setText(xml.getText().toString());
+		
+		
+        /*
         
         
         try
@@ -183,7 +235,7 @@ public class RssActivity extends Activity implements OnClickListener
 	    
 	    return page;
 	    
-	    
+	    */
 	}
 
 
@@ -196,8 +248,92 @@ public class RssActivity extends Activity implements OnClickListener
 		
 		
 	}
+	public TagNode xmlCleaner2(String fileName)  //html->xml
+	{
+		CleanerProperties props = new CleanerProperties();
+		props.setTranslateSpecialEntities(true);
+		props.setTransResCharsToNCR(true);
+		props.setOmitComments(true);
+		TagNode tagNode;
+		try 
+		{
+			tagNode = new HtmlCleaner(props).clean(new File(fileName));
+			return tagNode;
+			
+		} catch (MalformedURLException e) 
+		{
+			e.printStackTrace();
+			
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public String getHTML(String urlToRead)   //http://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
+	{
+	      URL url;
+	      HttpURLConnection conn;
+	     
+	      BufferedReader rd;
+	      String line;
+	      String result = "";
+	      try {
+	         url = new URL(urlToRead);
+	         conn = (HttpURLConnection) url.openConnection();
+	         conn.setRequestMethod("GET");
+	         rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	         while ((line = rd.readLine()) != null) {
+	            result += line+"\n";
+	         }
+	         rd.close();
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return result;
+	}
     
-    
+	
+	public TagNode xmlCleaner(String url)  //html->xml
+	{
+		CleanerProperties props = new CleanerProperties();
+		props.setTranslateSpecialEntities(true);
+		props.setTransResCharsToNCR(true);
+		props.setOmitComments(true);
+		TagNode tagNode;
+		try 
+		{
+			tagNode = new HtmlCleaner(props).clean(new URL(url));
+			return tagNode;
+			
+		} catch (MalformedURLException e) 
+		{
+			e.printStackTrace();
+			
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public TagNode findInfo(TagNode node, String XPathExpression, int i) //iskanje ciljnega elementa v XML-ju
+	{
+		TagNode description_node = null;
+		try 
+		{
+			description_node = (TagNode) node.evaluateXPath(XPathExpression)[i]; // i-ti zadetek
+		} catch (XPatherException e) 
+		{
+			e.printStackTrace();
+		}
+		return description_node;
+	}
 
 
 }
