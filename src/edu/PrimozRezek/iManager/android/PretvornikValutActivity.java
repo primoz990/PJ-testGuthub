@@ -1,7 +1,15 @@
 package edu.PrimozRezek.iManager.android;
 
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+
 import android.app.Activity;
+import android.net.ParseException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -11,12 +19,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+
 public class PretvornikValutActivity extends Activity implements OnClickListener 
 {
 	
-	Button bPretvori, bValuta1, bValuta2;
+	Button bValuta1, bValuta2;
 	EditText etValuta1, etValuta2;
 	Spinner sValuta1, sValuta2;
+	TextView txtView1;
+	
+	public final String SOAP_ACTION = "http://www.webserviceX.NET/ConversionRate";
+	public final String METHOD_NAME = "ConversionRate";
+	public final String NAMESPACE = "http://www.webserviceX.NET/";
+	public final String URL = "http://www.webservicex.net/CurrencyConvertor.asmx";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) 
@@ -24,15 +39,87 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.pretvornik_valut);
         
-        bPretvori = (Button) findViewById(R.id.buttonPretvoriValute);
+        //bPretvori = (Button) findViewById(R.id.buttonPretvoriValute);
 
         etValuta1 = (EditText) findViewById(R.id.editTextValuta1);
         etValuta2 = (EditText) findViewById(R.id.editTextValuta2);
         
         sValuta1 = (Spinner) findViewById(R.id.spinner1);
         sValuta2 = (Spinner) findViewById(R.id.spinner2);
+        
+        txtView1 = (TextView) findViewById(R.id.textViewPr);
     }
 	
+	private double KliciWebServis(String izValute, String vValuto) 
+	{
+		SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+		Request.addProperty("FromCurrency", izValute);
+		Request.addProperty("ToCurrency", vValuto);
+		
+		SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		soapEnvelope.dotNet = true;
+		soapEnvelope.setOutputSoapObject(Request);
+		
+		HttpTransportSE aht = new HttpTransportSE(URL);
+		
+		try
+		{
+			aht.call(SOAP_ACTION, soapEnvelope);
+			SoapPrimitive result = (SoapPrimitive)soapEnvelope.getResponse();
+			return Double.parseDouble(result.toString());
+		}
+		catch(Exception e)
+		{
+		  txtView1.setText("Potrebujete dostop do interneta!!!\nnapaka: "+e.toString());
+		}
+		
+		return 0;
+	}
+	
+	
+
+	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId()) {
+		//case R.id.buttonPretvoriValute:
+			
+			
+			
+		//break;
+		case R.id.view1:
+			
+			String valuta1 = (String)sValuta1.getSelectedItem();
+			String valuta2 = (String)sValuta2.getSelectedItem();
+
+			String v1 = valuta1.substring(0, 3);
+			String v2 = valuta2.substring(0, 3);
+			
+			if(etValuta1.getText().toString().length() == 0 && etValuta2.getText().toString().length() > 0)
+			{
+				double faktor = KliciWebServis(v2, v1);
+				double stevilo = Double.parseDouble(etValuta2.getText().toString());
+				txtView1.setText(v2+" -> "+v1+"\nPretvorni faktor = "+faktor);
+				etValuta1.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+				
+			}
+			else if (etValuta2.getText().toString().length() == 0 && etValuta1.getText().toString().length() > 0)
+			{
+				double faktor = KliciWebServis(v1, v2);
+				double stevilo = Double.parseDouble(etValuta1.getText().toString());
+				txtView1.setText(v1+" -> "+v2+"\nPretvorni faktor = "+KliciWebServis(v1, v2));
+				etValuta2.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+			}
+			else txtView1.setText("vnesite (samo) eno valuto!");
+			
+		break;
+		
+		}
+
+		
+	}
+	
+
 	
 	@Override
 	public void onStart()
@@ -192,27 +279,11 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 				"ZWD-Zimbabwe Dollar"};
 		
 		ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, valute);
+		adapter.setDropDownViewResource(R.layout.spiner_item);
 		sValuta1.setAdapter(adapter);
 		sValuta2.setAdapter(adapter);
 	}
 	
-	
-
-	@Override
-	public void onClick(View v)
-	{
-		switch (v.getId()) {
-		case R.id.buttonPretvoriValute:
-			
-			
-		break;
-		
-		}
-
-		
-	}
-	
-
 
 
 }

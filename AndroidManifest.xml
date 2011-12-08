@@ -64,6 +64,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".Alarm.AlarmActivity" android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="iManager - Nastavi Alarm">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".Alarm.AlarmService_Service" android:process=":remote" />
 
     </application>
     

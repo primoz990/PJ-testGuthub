@@ -3,18 +3,27 @@ package edu.PrimozRezek.iManager.android;
 
 
 import java.util.Calendar;
+
+import edu.PrimozRezek.iManager.android.Alarm.AlarmActivity;
+import edu.PrimozRezek.iManager.android.Alarm.AlarmService_Service;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AnalogClock;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.widget.TimePicker.OnTimeChangedListener;
 
 
@@ -34,6 +43,7 @@ public class uraActivity extends Activity implements OnClickListener {
 	CheckBox checkBox1, checkBox2, checkBox3;
 	
 
+	private PendingIntent mAlarmSender;
 
 	
     
@@ -41,6 +51,9 @@ public class uraActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
+        //alarm
+        mAlarmSender = PendingIntent.getService(uraActivity.this, 0, new Intent(uraActivity.this, AlarmService_Service.class), 0);
+        
         setContentView(R.layout.ura);
         
         textViev1 = (TextView) findViewById(R.id.textView1);
@@ -58,21 +71,57 @@ public class uraActivity extends Activity implements OnClickListener {
         int x= a.getTime().getDate();
         int c = a.getTime().getMonth()+1;
 
+
         textViev1.setText(x+"/"+c);
         
-        
+
+        //alarm
+       
+//        Button button = (Button)findViewById(R.id.buttonBujenje);
+//        button.setOnClickListener(mStartAlarmListener);
+//        button = (Button)findViewById(R.id.buttonPocitek);
+//        button.setOnClickListener(mStopAlarmListener);
         
     }
+    
+//    private OnClickListener mStartAlarmListener = new OnClickListener() {
+//        public void onClick(View v) {
+//            // We want the alarm to go off 30 seconds from now.
+//            long firstTime = SystemClock.elapsedRealtime();
+//
+//            // Schedule the alarm!
+//            AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+//            am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                            firstTime, 30*1000, mAlarmSender);
+//
+//            // Tell the user about what we did.
+//            Toast.makeText(uraActivity.this, "Repeating alarm will go off in 15 seconds and every 15 seconds after based on the elapsed realtime clock",
+//                    Toast.LENGTH_LONG).show();
+//        }
+//    };
+//
+//    private OnClickListener mStopAlarmListener = new OnClickListener() {
+//        public void onClick(View v) {
+//            // And cancel the alarm.
+//            AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+//            am.cancel(mAlarmSender);
+//
+//            // Tell the user about what we did.
+//            Toast.makeText(uraActivity.this, "Repeating alarm has been unscheduled",
+//                    Toast.LENGTH_LONG).show();
+//
+//        }
+//    };
     
 
 
 
     private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener()
     {
-    	public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+    	public void onTimeSet(TimePicker view, int hourOfDay, int minute)   
     	{
-    		uraa = hourOfDay;
-    		minutaa = minute;
+    		uraa = hourOfDay;  
+    		minutaa = minute;  
     	}
     	
     	
@@ -106,27 +155,55 @@ public class uraActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) 
 	{
-	
+		
+
+        
 		switch(v.getId())
 		{
-		case R.id.button2: 
+		case R.id.buttonBujenje: 
 			
-			showDialog(TIME_DIALOG_ID);
-			
-			//TpD1= new TimePickerDialog(this, mTimeSetListener, 7, 0, true);
-	       // TpD1.show();
 
-	        checkBox1.setText(uraa+":"+minutaa);
-	        checkBox1.setChecked(true);
-	        
+			Intent dodajAct = new Intent(this, AlarmActivity.class);
+			this.startActivity(dodajAct);
+//	        
+//			
+//			// We want the alarm to go off 30 seconds from now.
+//            long firstTime = SystemClock.elapsedRealtime();
+//
+//            // Schedule the alarm!
+//            AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+//            am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                            firstTime, 30*1000, mAlarmSender);
+//
+//            // Tell the user about what we did.
+//            Toast.makeText(uraActivity.this, "Repeating alarm will go off in 15 seconds and every 15 seconds after based on the elapsed realtime clock",
+//                    Toast.LENGTH_LONG).show();
+//            
+            
+//            
+//			showDialog(TIME_DIALOG_ID);
+//	        checkBox1.setText(uraa+":"+minutaa);
+//	        checkBox1.setChecked(true);
+			
 	        
 			
 		break;
-		case R.id.button3: 
+		case R.id.buttonPocitek: 
 			
-			showDialog(TIME_DIALOG_ID);
-	        checkBox2.setText(uraa+":"+minutaa);
-	        checkBox2.setChecked(true);
+//			showDialog(TIME_DIALOG_ID);
+//	        checkBox2.setText(uraa+":"+minutaa);
+//	        checkBox2.setChecked(true);
+			
+			
+//			// And cancel the alarm.
+//            AlarmManager am1 = (AlarmManager)getSystemService(ALARM_SERVICE);
+//            am1.cancel(mAlarmSender);
+//
+//            // Tell the user about what we did.
+//            Toast.makeText(uraActivity.this, "Repeating alarm has been unscheduled",
+//                    Toast.LENGTH_LONG).show();
+//			
+			
 			
 		break;
 		case R.id.button4: 

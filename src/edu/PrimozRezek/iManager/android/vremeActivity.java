@@ -93,7 +93,7 @@ public class vremeActivity extends Activity implements OnClickListener
 		@Override
 		public void onClick(View v) 
 		{
-			String stran = new String();
+			String stran ="";
 			 
 			try
 			{
@@ -122,7 +122,7 @@ public class vremeActivity extends Activity implements OnClickListener
 			
 			
 			String napoved = stran.substring(stran.indexOf("<p>")+3, stran.lastIndexOf("</p>"));
-			String nova= new String();
+			String nova="";
 			char[] vmes=new char[6];
 			for (int i=0; i<napoved.length()-5; i++)
 			{

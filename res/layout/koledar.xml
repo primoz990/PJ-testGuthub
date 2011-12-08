@@ -9,7 +9,21 @@
         <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayout1" android:gravity="center">
             <Button android:text="Dodaj Dogodek" android:layout_height="wrap_content" android:onClick="onClick" android:layout_width="wrap_content" android:id="@+id/buttonDodajDogodek"></Button>
             <Button android:text="Pretvornik Valut" android:layout_width="wrap_content" android:layout_height="match_parent" android:id="@+id/Pretvornikbutton" android:onClick="onClick"></Button>
+
+            <Button
+                android:id="@+id/buttonWeka"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="Weka" />
+
         </LinearLayout>
-        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tukaj bo koledar in opravila"></TextView>
+
+        <TextView
+            android:id="@+id/textViewIzpisDogodkov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tukaj bo koledar in opravila" >
+</TextView>
     </LinearLayout>
 </LinearLayout>

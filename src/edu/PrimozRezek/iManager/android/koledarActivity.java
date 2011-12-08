@@ -10,6 +10,7 @@ import java.util.List;
 
 import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
 import edu.PrimozRezek.iManager.android.BAZA.Koledar;
+import edu.PrimozRezek.iManager.android.Weka.WekaActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -48,7 +49,7 @@ public class koledarActivity extends Activity implements OnClickListener {
         mainLL = (LinearLayout) findViewById(R.id.mainLL);
         mainLL.addView(g,0);
         
-        text1 = (TextView) findViewById(R.id.textView1);
+        text1 = (TextView) findViewById(R.id.textViewIzpisDogodkov);
         
         //dodajDog = (Button) findViewById(R.id.buttonDodajDogodek);
         //pretvValut = (Button) findViewById(R.id.Pretvornikbutton);
@@ -68,7 +69,14 @@ public class koledarActivity extends Activity implements OnClickListener {
 		
         //izpišem bazo dogodkov
         text1.setText("\nDogodki:\n\n");
-        for(int i=0; i<dogodki.size(); i++) text1.append("- "+dogodki.get(i).datum.toString()+" "+dogodki.get(i).NaslovDogodka+" "+dogodki.get(i).OpisDogodka+"\n");
+        for(int i=0; i<dogodki.size(); i++) 
+        {
+        	text1.append("- "+
+        		dogodki.get(i).datum.toString()+" "+
+        		dogodki.get(i).NaslovDogodka+" "
+        		+dogodki.get(i).OpisDogodka+" "
+        		+dogodki.get(i).prioriteta+"\n");
+        }
 
 	}
     
@@ -87,6 +95,10 @@ public class koledarActivity extends Activity implements OnClickListener {
 			case R.id.Pretvornikbutton:
 				Intent dodajPrAct = new Intent(this, PretvornikValutActivity.class);
 				this.startActivity(dodajPrAct);
+			break;
+			case R.id.buttonWeka:
+				Intent weka = new Intent(this, WekaActivity.class);
+				this.startActivity(weka);
 			break;
 		}
 
@@ -118,6 +130,7 @@ public class koledarActivity extends Activity implements OnClickListener {
 			tmp.setDatum(c.getString(DBAdapterKoledar.POS_DATUM));
 			tmp.setNaslovDogodka(c.getString(DBAdapterKoledar.POS_NASLOV));
 			tmp.setOpisDogodka(c.getString(DBAdapterKoledar.POS_OPIS));
+			tmp.setOpisDogodka(c.getString(DBAdapterKoledar.POS_PRIORITETA));
 			
 			dogodki.add(tmp); 
 		}

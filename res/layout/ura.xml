@@ -21,11 +21,27 @@
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout6" android:layout_width="match_parent" android:layout_height="20dip"></LinearLayout>
     <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">
-        <Button android:layout_height="wrap_content" android:id="@+id/button2" android:text="Bujenje" android:layout_width="wrap_content" android:layout_weight="1" android:onClick="onClick"></Button>
+
+        <Button
+            android:id="@+id/buttonBujenje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Bujenje" >
+</Button>
         <CheckBox android:id="@+id/checkBox1" android:layout_width="wrap_content" android:layout_height="wrap_content" style=" " android:text="    6 : 30   "></CheckBox>
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">
-        <Button android:layout_height="wrap_content" android:id="@+id/button3" android:text="Počitek" android:layout_width="wrap_content" android:layout_weight="1" android:onClick="onClick"></Button>
+
+        <Button
+            android:id="@+id/buttonPocitek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Počitek" >
+</Button>
         <CheckBox android:id="@+id/checkBox2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="   16 : 30   "></CheckBox>
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">

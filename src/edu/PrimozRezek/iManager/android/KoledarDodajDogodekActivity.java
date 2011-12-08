@@ -1,6 +1,5 @@
 package edu.PrimozRezek.iManager.android;
 
-import java.sql.Date;
 
 import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
 import edu.PrimozRezek.iManager.android.BAZA.Koledar;
@@ -8,9 +7,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class KoledarDodajDogodekActivity extends Activity implements OnClickListener {
 
@@ -18,8 +19,9 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
 	
 	
 	DatePicker datePicker1;
-	EditText editText1, editText2;
+	EditText editTextNaslov, editTextOpis;
 	Button gumbDodaj;
+	Spinner spnPrior;
 	
 	
 	@Override
@@ -31,10 +33,21 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
         db = new DBAdapterKoledar(this);
         
         datePicker1 = (DatePicker) findViewById(R.id.datePicker1);
-        editText1 = (EditText) findViewById(R.id.editText1);
-        editText2 = (EditText) findViewById(R.id.editText2);
-        gumbDodaj = (Button) findViewById(R.id.button1);
+        editTextNaslov = (EditText) findViewById(R.id.editTextDodajNaslov);
+        editTextOpis = (EditText) findViewById(R.id.editTextDodajOpis);
+        gumbDodaj = (Button) findViewById(R.id.buttonShraniDogodek);
+        spnPrior= (Spinner) findViewById(R.id.spinnerPrioriteta);
     }
+	
+	@Override
+	protected void onStart() 
+	{
+		super.onStart();
+		
+		String prioritete[] = {"Normalno", "Pomembno", "Majn pomembno", "Zelo pomembno"}; 
+		ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, prioritete);
+		spnPrior.setAdapter(adapter);
+	}
 	
 
 
@@ -45,8 +58,9 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
 
 		String d = datePicker1.getDayOfMonth()+"."+(datePicker1.getMonth()+1)+"."+datePicker1.getYear();	
 		x.setDatum(d);
-		x.setNaslovDogodka(editText1.getText().toString());
-		x.setOpisDogodka(editText2.getText().toString());
+		x.setNaslovDogodka(editTextNaslov.getText().toString());
+		x.setOpisDogodka(editTextOpis.getText().toString());
+		x.setPrioriteta(spnPrior.getSelectedItem().toString());
 		
 		addDB(x);
 		finish();

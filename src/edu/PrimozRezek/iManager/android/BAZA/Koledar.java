@@ -1,12 +1,12 @@
 package edu.PrimozRezek.iManager.android.BAZA;
 
-import java.sql.Date;
 
 public class Koledar 
 {
 	public String datum;
 	public String NaslovDogodka;
 	public String OpisDogodka;
+	public String prioriteta;
 	public long dbID;
 	
 	
@@ -42,6 +42,12 @@ public class Koledar
 	public void setOpisDogodka(String opisDogodka) 
 	{
 		OpisDogodka = opisDogodka;
+	}
+	public String getPrioriteta() {
+		return prioriteta;
+	}
+	public void setPrioriteta(String prioriteta) {
+		this.prioriteta = prioriteta;
 	}
 
 	

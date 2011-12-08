@@ -15,12 +15,14 @@ public class DBAdapterKoledar implements BaseColumns {
 	public static final String DATUM = "d_datum";
 	public static final String NASLOV = "n_naslov";
 	public static final String OPIS = "o_opis";
+	public static final String PRIORITETA = "p_prioriteta";
 	
 	public static final  int POS__ID=0;
 	public static final  int POS_DATUM=1;
 	public static final  int POS_NASLOV=2;
 	public static final  int POS_OPIS=3;
-
+	public static final  int POS_PRIORITETA=4;
+	
 	private final Context context;
 	private DatabaseHelper DBHelper;
 	private SQLiteDatabase db;
@@ -53,6 +55,8 @@ public class DBAdapterKoledar implements BaseColumns {
 		initialValues.put(DATUM, k.getDatum().toString());
 		initialValues.put(NASLOV, k.getNaslovDogodka()); 
 		initialValues.put(OPIS, k.getOpisDogodka()); 
+		initialValues.put(PRIORITETA, k.getPrioriteta()); 
+		
 		return db.insert(TABLE, null, initialValues);
 	}
 
@@ -69,7 +73,8 @@ public class DBAdapterKoledar implements BaseColumns {
 				_ID,       //POS__ID=0;
 				DATUM,      //1
 				NASLOV,		//2
-				OPIS},      //3
+				OPIS,		//3
+				PRIORITETA},  //4    
 				null, 		
 				null, 
 				null, 
@@ -85,7 +90,8 @@ public class DBAdapterKoledar implements BaseColumns {
 					_ID, 
 					DATUM,
 					NASLOV,
-					OPIS}, 
+					OPIS,		
+					PRIORITETA},    
 					_ID + "=" + rowId, 
 					null,
 					null, 
@@ -105,6 +111,7 @@ public class DBAdapterKoledar implements BaseColumns {
 		args.put(DATUM, tmp.getDatum().toString());
 		args.put(NASLOV, tmp.getNaslovDogodka());
 		args.put(OPIS, tmp.getOpisDogodka());
+		args.put(PRIORITETA, tmp.getPrioriteta());
 		return db.update(TABLE, args, 
 				_ID + "=" + tmp.getDbID(), null) > 0;
 	}

@@ -13,7 +13,7 @@ public  class DatabaseHelper extends SQLiteOpenHelper
 	private static final String DATABASE_NAME = "DB_iManager";
 	private static final String DATABASE_CREATE =
 		"create table "+DBAdapterKoledar.TABLE+" ("+DBAdapterKoledar._ID+" integer primary key autoincrement, "
-		+ DBAdapterKoledar.DATUM+" TEXT, " +DBAdapterKoledar.NASLOV+" TEXT, "+DBAdapterKoledar.OPIS+" TEXT );";
+		+ DBAdapterKoledar.DATUM+" TEXT, " +DBAdapterKoledar.NASLOV+" TEXT, "+DBAdapterKoledar.OPIS+" TEXT, "+DBAdapterKoledar.PRIORITETA+" TEXT );";
 
 	DatabaseHelper(Context context) 
 	{
