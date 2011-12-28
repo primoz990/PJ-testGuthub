@@ -16,7 +16,7 @@ public class Gumbi extends LinearLayout implements OnClickListener {
 	Button gumbVreme;
 	Button gumbRss;
 	Button gumbKoledar;
-	Button gumbNastavitve;
+	Button gumbValute;
 	Activity a;
 	int id;
 	public Gumbi(Activity a, int id) {
@@ -31,39 +31,39 @@ public class Gumbi extends LinearLayout implements OnClickListener {
 	        gumbVreme = (Button) findViewById(R.id.gumbVreme);
 	        gumbRss = (Button) findViewById(R.id.gumbRss);
 	        gumbKoledar = (Button) findViewById(R.id.gumbKoledar);
-	        gumbNastavitve = (Button) findViewById(R.id.gumbNastavitve);
+	        gumbValute = (Button) findViewById(R.id.gumbValute);
 	        
 	        switch (id) {
 			case uraActivity.id:
-				gumbNastavitve.setEnabled(true);
+				gumbValute.setEnabled(true);
 				gumbRss.setEnabled(true);
 				gumbVreme.setEnabled(true);
 				gumbKoledar.setEnabled(true);
 				gumbUra.setEnabled(false);
 				break;
 			case koledarActivity.id:
-				gumbNastavitve.setEnabled(true);
+				gumbValute.setEnabled(true);
 				gumbRss.setEnabled(true);
 				gumbVreme.setEnabled(true);
 				gumbKoledar.setEnabled(false);
 				gumbUra.setEnabled(true);
 				break;
 			case vremeActivity.id:
-				gumbNastavitve.setEnabled(true);
+				gumbValute.setEnabled(true);
 				gumbRss.setEnabled(true);
 				gumbVreme.setEnabled(false);
 				gumbKoledar.setEnabled(true);
 				gumbUra.setEnabled(true);
 				break;
 			case RssActivity.id:
-				gumbNastavitve.setEnabled(true);
+				gumbValute.setEnabled(true);
 				gumbRss.setEnabled(false);
 				gumbVreme.setEnabled(true);
 				gumbKoledar.setEnabled(true);
 				gumbUra.setEnabled(true);
 				break;
-			case nastavitveActivity.id:
-				gumbNastavitve.setEnabled(false);
+			case PretvornikValutActivity.id:
+				gumbValute.setEnabled(false);
 				gumbRss.setEnabled(true);
 				gumbVreme.setEnabled(true);
 				gumbKoledar.setEnabled(true);
@@ -77,7 +77,7 @@ public class Gumbi extends LinearLayout implements OnClickListener {
 	        gumbVreme.setOnClickListener(this);
 	        gumbRss.setOnClickListener(this);
 	        gumbKoledar.setOnClickListener(this);
-	        gumbNastavitve.setOnClickListener(this);
+	        gumbValute.setOnClickListener(this);
 		
 	}
 	@Override
@@ -106,10 +106,12 @@ public class Gumbi extends LinearLayout implements OnClickListener {
 			Intent koledarAct = new Intent(getContext(), koledarActivity.class);
 			getContext().startActivity(koledarAct);
 		break;
-		case R.id.gumbNastavitve:
+		case R.id.gumbValute:
 			a.finish();
-			Intent nastavitveAct = new Intent(getContext(), nastavitveActivity.class);
-			getContext().startActivity(nastavitveAct);
+//			Intent koledaAct = new Intent(getContext(), koledarActivity.class);
+//			getContext().startActivity(koledaAct);
+			Intent valuteAct = new Intent(getContext(), PretvornikValutActivity.class);
+			getContext().startActivity(valuteAct);
 		break;
 			
 		

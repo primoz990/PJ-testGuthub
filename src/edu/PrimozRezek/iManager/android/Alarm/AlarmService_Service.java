@@ -20,10 +20,6 @@ package edu.PrimozRezek.iManager.android.Alarm;
 // class is in a sub-package.
 
 import java.util.Calendar;
-
-import edu.PrimozRezek.iManager.android.R;
-import edu.PrimozRezek.iManager.android.uraActivity;
-import edu.PrimozRezek.iManager.android.R.drawable;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -47,29 +43,22 @@ import android.widget.Toast;
  */
 public class AlarmService_Service extends Service {
     NotificationManager mNM;
-    PrenosCasa pc1 = new PrenosCasa();
     
     @Override
-    public void onCreate() {
+    public void onCreate() 
+    {
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
-        // show the icon in the status bar
-        //showNotification();
-
-        // Start up the thread running the service.  Note that we create a
-        // separate thread because the service normally runs in the process's
-        // main thread, which we don't want to block.
         Thread thr = new Thread(null, mTask, "AlarmService_Service");
         thr.start();
         
     }
 
     @Override
-    public void onDestroy() {
-        // Cancel the notification -- we use the same ID that we had used to start it
-        mNM.cancel(54321);
+    public void onDestroy() 
+    {
+        
+        mNM.cancel(5432111);
 
-        // Tell the user we stopped.
         Toast.makeText(this, "alarm_service_finished", Toast.LENGTH_SHORT).show();
     }
 
@@ -77,30 +66,10 @@ public class AlarmService_Service extends Service {
      * The function that runs in our worker thread
      */
     Runnable mTask = new Runnable() {  
-        public void run() {
-            // Normally we would do some work here...  for our sample, we will
-            // just sleep for 30 seconds.
-//            long endTime = System.currentTimeMillis() + 15*1000;
-//            while (System.currentTimeMillis() < endTime) 
-//            {
-//                synchronized (mBinder) 
-//                {
-//                    try 
-//                    {
-//                        mBinder.wait(endTime - System.currentTimeMillis());
-//                    } catch (Exception e) {
-//                    }
-//                }
-//            }
-        	  Calendar a= Calendar.getInstance();
+        public void run() 
+        {
+        	startPlaying();
 
-     
-        	if(a.getTime().getMinutes()>=pc1.getMinuta())
-        	{
-        		showNotification2();
-        	}
-
-            // Done with our work...  stop the service!
             AlarmService_Service.this.stopSelf();
         }
     };
@@ -113,43 +82,15 @@ public class AlarmService_Service extends Service {
     /**
      * Show a notification while this service is running.
      */
-    private void showNotification() {
-        // In this sample, we'll use the same text for the ticker and the expanded notification
-        CharSequence text = "neko besedilo";
-
-        // Set the icon, scrolling text and timestamp
-        Notification notification = new Notification(R.drawable.ura, text, System.currentTimeMillis());
-
-        // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, AlarmActivity.class), 0);
-
-        // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(this, "NOTIFIKACIJA", text, contentIntent);
-
-        // Send the notification.
-        // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify(54321, notification);
+    private void startPlaying() 
+    {
+    	Intent i = new Intent(this, IzklopBudilkeActivity.class);
+    	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	this.startActivity(i);
     }
     
-    private void showNotification2() {
-        // In this sample, we'll use the same text for the ticker and the expanded notification
-        CharSequence text = "SPROZENO!!!"+pc1.getMinuta();
-
-        // Set the icon, scrolling text and timestamp
-        Notification notification = new Notification(R.drawable.vreme, text, System.currentTimeMillis());
-
-        // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, AlarmActivity.class), 0);
-
-        // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(this, "Sprozen alarm", text, contentIntent);
-
-        // Send the notification.
-        // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify(54321, notification);
-    }
+    
+    
 
     /**
      * This is the object that receives interactions from clients.  See RemoteService

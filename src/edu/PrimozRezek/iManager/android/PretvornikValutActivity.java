@@ -5,9 +5,14 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.w3c.dom.Node;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.ParseException;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,18 +20,26 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 
 public class PretvornikValutActivity extends Activity implements OnClickListener 
 {
+	public static final int id=5;
+	//gumbi za preklaplanje med activity
+	Gumbi g;
+	LinearLayout mainLL;
 	
 	Button bValuta1, bValuta2;
 	EditText etValuta1, etValuta2;
 	Spinner sValuta1, sValuta2;
 	TextView txtView1;
+	
+	ProgressDialog dialogWait;
 	
 	public final String SOAP_ACTION = "http://www.webserviceX.NET/ConversionRate";
 	public final String METHOD_NAME = "ConversionRate";
@@ -39,7 +52,9 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.pretvornik_valut);
         
-        //bPretvori = (Button) findViewById(R.id.buttonPretvoriValute);
+        g = new Gumbi( this, id);
+        mainLL = (LinearLayout) findViewById(R.id.mainLL);
+        mainLL.addView(g,0);
 
         etValuta1 = (EditText) findViewById(R.id.editTextValuta1);
         etValuta2 = (EditText) findViewById(R.id.editTextValuta2);
@@ -49,6 +64,7 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
         
         txtView1 = (TextView) findViewById(R.id.textViewPr);
     }
+	
 	
 	private double KliciWebServis(String izValute, String vValuto) 
 	{
@@ -73,7 +89,7 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 		  txtView1.setText("Potrebujete dostop do interneta!!!\nnapaka: "+e.toString());
 		}
 		
-		return 0;
+		return -888;
 	}
 	
 	
@@ -81,12 +97,8 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		switch (v.getId()) {
-		//case R.id.buttonPretvoriValute:
-			
-			
-			
-		//break;
+		switch (v.getId()) 
+		{
 		case R.id.view1:
 			
 			String valuta1 = (String)sValuta1.getSelectedItem();
@@ -97,27 +109,111 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 			
 			if(etValuta1.getText().toString().length() == 0 && etValuta2.getText().toString().length() > 0)
 			{
-				double faktor = KliciWebServis(v2, v1);
-				double stevilo = Double.parseDouble(etValuta2.getText().toString());
-				txtView1.setText(v2+" -> "+v1+"\nPretvorni faktor = "+faktor);
-				etValuta1.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+
+				PretvoriValute pv1 = new PretvoriValute();
+				String nacin = "1";
+				pv1.execute(v2, v1, nacin);
 				
 			}
 			else if (etValuta2.getText().toString().length() == 0 && etValuta1.getText().toString().length() > 0)
 			{
-				double faktor = KliciWebServis(v1, v2);
-				double stevilo = Double.parseDouble(etValuta1.getText().toString());
-				txtView1.setText(v1+" -> "+v2+"\nPretvorni faktor = "+KliciWebServis(v1, v2));
-				etValuta2.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+				
+				PretvoriValute pv2 = new PretvoriValute();
+				String nacin = "2";
+				pv2.execute(v1, v2, nacin);
+
 			}
 			else txtView1.setText("vnesite (samo) eno valuto!");
 			
+		break;
+		case R.id.editTextValuta1:
+			if (etValuta1.getTextSize()>0) 
+				{
+					etValuta1.setText("");
+					txtView1.setText("");
+				}
+		break;
+		case R.id.editTextValuta2:
+			if (etValuta2.getTextSize()>0) 
+				{
+					etValuta2.setText("");
+					txtView1.setText("");
+				}
 		break;
 		
 		}
 
 		
 	}
+	
+	
+	
+	private class PretvoriValute extends AsyncTask<String, Void, String>  //prrametri, progres, rezultati
+	{
+		@Override
+		protected void onPreExecute() 
+		{
+			dialogWait = ProgressDialog.show(PretvornikValutActivity.this, "Osveževanje", "Prosim počakajte...", true);
+		}
+		
+		double faktor;
+		String valu1, valu2, nacinn;
+		
+		protected String doInBackground(String...parametri) 
+		{
+			//snamem podatke iz interneta
+			try 
+			{
+
+				valu1 = parametri[0];
+				valu2 = parametri[1];
+				nacinn = parametri[2];
+				faktor = KliciWebServis(valu1, valu2);		
+				
+			} catch (Exception e) {
+				return "NOK";
+			}
+			
+			
+	        return "OK"; //OK in vrsta izpisa 1 ali 2
+		}
+		
+		protected void onPostExecute(String rezultat) 
+		{
+			//ko potegnem iz interneta faktor pretvorbe, izračunam in izpišem drugo valuto
+			if(rezultat=="OK" && nacinn=="1")
+			{
+				if(faktor!=-888)
+				{
+					double stevilo = Double.parseDouble(etValuta2.getText().toString());
+					txtView1.setText(valu1+" -> "+valu2+"\n"+faktor);
+					etValuta1.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+				}else txtView1.setText("Potrebujete dostop do interneta!!!");
+			}
+			else if(rezultat=="OK" && nacinn=="2")
+			{
+				if(faktor!=-888)
+				{
+					double stevilo = Double.parseDouble(etValuta1.getText().toString());
+					txtView1.setText(valu1+" -> "+valu2+"\n"+faktor);
+					etValuta2.setText(""+(double)Math.round((stevilo * faktor) * 1000) / 1000); //zaokrožim na 3 decimalke
+					
+				}else txtView1.setText("Potrebujete dostop do interneta!!!");
+			}
+			else 	
+			{
+				txtView1.setText("Napaka! Potrebujete dostop do interneta!");
+				Toast.makeText(PretvornikValutActivity.this,"Ni povezave!",Toast.LENGTH_LONG).show();
+			}
+	        
+	        //ko smo z delom zaključili še prekinemo dialog
+			dialogWait.cancel();
+	        
+		}
+
+	}
+	
+	
 	
 
 	
@@ -126,7 +222,7 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 	{
 		super.onStart();
 		
-		String valute[] = {"AFA-Afghanistan Afghani",
+		String valute[] = {
 				"ALL-Albanian Lek",
 				"DZD-Algerian Dinar",
 				"ARS-Argentine Peso",

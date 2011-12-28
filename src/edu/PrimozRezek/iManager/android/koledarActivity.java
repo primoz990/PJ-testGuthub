@@ -1,26 +1,21 @@
 package edu.PrimozRezek.iManager.android;
+ 
+//VIR:
+// http://w2davids.wordpress.com/android-simple-calendar/
 
-
-
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
-import edu.PrimozRezek.iManager.android.BAZA.Koledar;
-import edu.PrimozRezek.iManager.android.Weka.WekaActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
+import edu.PrimozRezek.iManager.android.BAZA.Koledar;
 
 
 public class koledarActivity extends Activity implements OnClickListener {
@@ -53,7 +48,6 @@ public class koledarActivity extends Activity implements OnClickListener {
         
         //dodajDog = (Button) findViewById(R.id.buttonDodajDogodek);
         //pretvValut = (Button) findViewById(R.id.Pretvornikbutton);
-
         
         
     }
@@ -81,7 +75,7 @@ public class koledarActivity extends Activity implements OnClickListener {
 	}
     
     
-	@Override
+	//@Override
 	public void onClick(View v) 
 	{
 		switch (v.getId()) 
@@ -95,10 +89,6 @@ public class koledarActivity extends Activity implements OnClickListener {
 			case R.id.Pretvornikbutton:
 				Intent dodajPrAct = new Intent(this, PretvornikValutActivity.class);
 				this.startActivity(dodajPrAct);
-			break;
-			case R.id.buttonWeka:
-				Intent weka = new Intent(this, WekaActivity.class);
-				this.startActivity(weka);
 			break;
 		}
 

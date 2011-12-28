@@ -1,24 +1,50 @@
 package edu.PrimozRezek.iManager.android;
 
 
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.net.URL;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
+import org.htmlcleaner.XPatherException;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import edu.PrimozRezek.iManager.android.RssActivity.Novica;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +52,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class vremeActivity extends Activity implements OnClickListener  
@@ -41,18 +68,18 @@ public class vremeActivity extends Activity implements OnClickListener
 	TextView textViev3;
 	TextView textViev4;
 	TextView textViev5;
+	TextView textVievOsvezitev;
 	Button gumbOsvezi;
-	ProgressDialog progressBar1;
+	  
 	
 	ImageView imageView1;
 	ImageView imageView2;
 	ImageView imageView3;
 	ImageView imageView4;
 	
-		
-	//OsveziVreme vreme;
-		
-	    
+	ProgressDialog dialogWait;
+	
+
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) 
 	    {
@@ -64,11 +91,11 @@ public class vremeActivity extends Activity implements OnClickListener
 	        mainLL.addView(g,0);
 
 	        
-	        textViev1 = (TextView) findViewById(R.id.textView1);
-	        textViev2 = (TextView) findViewById(R.id.textView2);
-	        textViev3 = (TextView) findViewById(R.id.textView3);
-	        textViev4 = (TextView) findViewById(R.id.textView4);
-	        textViev5 = (TextView) findViewById(R.id.textView5);
+	        textViev1 = (TextView) findViewById(R.id.textViewTren1);  
+	        textViev2 = (TextView) findViewById(R.id.textViewNapoved2);
+	        textViev3 = (TextView) findViewById(R.id.textViewDan3);
+	        textViev4 = (TextView) findViewById(R.id.textViewDan4);
+	        textViev5 = (TextView) findViewById(R.id.textViewDan5);
 	        
 	        gumbOsvezi = (Button) findViewById(R.id.button1);
 	        imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -77,8 +104,99 @@ public class vremeActivity extends Activity implements OnClickListener
 	        imageView4 = (ImageView) findViewById(R.id.imageView4);
 	        gumbOsvezi.setOnClickListener(this);
 	        
-	        onClick(gumbOsvezi);
+	        textVievOsvezitev = (TextView) findViewById(R.id.textViewNazadnjeOsvezenoVreme);
+	        
+	        
+	        preberiPodatkeIzKartice();
+	       
 	    }
+	    
+	    public String preberiizdat(String file) throws Exception //http://www.roseindia.net/java/beginners/java-read-file-line-by-line.shtml
+		{
+			String izhod="";
+			try
+			{
+				  FileInputStream fstream = new FileInputStream(file);
+	  			  DataInputStream in = new DataInputStream(fstream);
+	  			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	  			  String strLine;
+	  			  //Read File Line By Line
+	  			  while ((strLine = br.readLine()) != null)   izhod+=strLine+"\n";
+	  			  in.close();
+	  		}catch (Exception e)
+	  		{
+	  			  throw(e);
+	  		}
+	
+	  		return izhod;
+  	
+		}
+			
+
+	    public void preberiPodatkeIzKartice() //http://www.roseindia.net/java/beginners/java-read-file-line-by-line.shtml
+	    {
+	    	//nazadnje osveženo:
+	    	SharedPreferences nazadnje_osvezeno = getSharedPreferences("VREME_OSVEZITEV", 0);
+	        textVievOsvezitev.setText(nazadnje_osvezeno.getString("nazadnje_osvezeno_vreme", " "));   
+	        
+	    	
+	    		try 
+	    		{
+					textViev1.setText(preberiizdat("/mnt/sdcard/iManager/Vreme/trenutnaNapoved.txt"));
+					textViev2.setText(preberiizdat("/mnt/sdcard/iManager/Vreme/txtNapoved.txt"));
+					textViev3.setText(preberiizdat("/mnt/sdcard/iManager/Vreme/prviDan.txt"));
+					textViev4.setText(preberiizdat("/mnt/sdcard/iManager/Vreme/drugiDan.txt"));
+					textViev5.setText(preberiizdat("/mnt/sdcard/iManager/Vreme/tretjiDan.txt"));
+					
+					Bitmap slikaTrenutna= BitmapFactory.decodeFile("/mnt/sdcard/iManager/Vreme/trenutnaSlika.PNG");
+					imageView1.setImageBitmap(slikaTrenutna);
+					Bitmap slikica1= BitmapFactory.decodeFile("/mnt/sdcard/iManager/Vreme/slikica1.PNG");
+					imageView2.setImageBitmap(slikica1);
+					Bitmap slikica2= BitmapFactory.decodeFile("/mnt/sdcard/iManager/Vreme/slikica2.PNG");
+					imageView3.setImageBitmap(slikica2);
+					Bitmap slikica3= BitmapFactory.decodeFile("/mnt/sdcard/iManager/Vreme/slikica3.PNG");
+					imageView4.setImageBitmap(slikica3);
+				} catch (Exception e) 
+				{
+					textViev1.setText("Ni podatkov, osveži.");
+				}
+	    	
+	    }
+	    
+	    
+	    
+	    public void shranivdat(String vsebina, String path) //http://www.roseindia.net/java/beginners/java-write-to-file.shtml
+		 {
+			try
+			{
+				File pot = new File("/mnt/sdcard/iManager/Vreme/");
+				pot.mkdirs();
+				
+				FileWriter fstream = new FileWriter(pot.getPath()+"/"+path);
+				BufferedWriter out = new BufferedWriter(fstream);
+				out.write(vsebina);
+				out.close();
+			}catch (Exception e)
+			{
+				System.err.println("Napaka: " + e.getMessage());
+			}
+		 }
+	    
+	    public void shraniBmp(String file, Bitmap image) //http://stackoverflow.com/questions/649154/android-bitmap-save-to-location
+	    {
+	    	try 
+	    	{
+	    		File pot = new File("/mnt/sdcard/iManager/Vreme/");
+				pot.mkdirs();
+				
+	    	    FileOutputStream out = new FileOutputStream(pot.getPath()+"/"+file);
+	    	    image.compress(Bitmap.CompressFormat.PNG, 90, out);
+	    	} catch (Exception e) 
+	    	{
+	    	       e.printStackTrace();
+	    	}
+	    }
+	    
 
 	    
 	    @Override
@@ -88,51 +206,315 @@ public class vremeActivity extends Activity implements OnClickListener
 
 		}
 
-
-
+		
 		@Override
 		public void onClick(View v) 
 		{
-			String stran ="";
-			 
-			try
+			OsveziVreme ov  = new OsveziVreme();
+			ov.execute();
+//			osveziVreme();
+		}
+
+
+		 
+		private class OsveziVreme extends AsyncTask<Void, Void, String>  //prrametri, progres, rezultati
+		{
+			@Override
+			protected void onPreExecute() 
 			{
-			//trenutne info
-			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml");
-
-			String temperatura = stran.substring(stran.indexOf("<t>")+3, stran.indexOf("</t>"));
-			String stanje = stran.substring(stran.indexOf("<nn_shortText>")+14, stran.indexOf("</nn_shortText>"));
-			String smerVetra = stran.substring(stran.indexOf("<dd_longText>")+13, stran.indexOf("</dd_longText>"));
-			String hitrostVetraKMH = stran.substring(stran.indexOf("<ff_val_kmh>")+12, stran.indexOf("</ff_val_kmh>"));
+				dialogWait = ProgressDialog.show(vremeActivity.this, "Osveževanje", "Prosim počakajte...", true);
+			}
 			
-			textViev1.setText("Maribor:\n "+stanje+", "+temperatura+"°C\n "+smerVetra+", "+hitrostVetraKMH+"km/h");
-
-			//trenutna slika
-			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.html");
+			Node temperatura;
+			Node stanje;
+			Node smerVetra;
+			Node hitrostVetraKMH;
+			TagNode linkTrenutna;
+			TagNode napoved;
+			NodeList dnevi;
+			NodeList situacije;
+			NodeList TempMinimalne;
+			NodeList TempMaximalne;
+			Bitmap trenutnaSlika;
+			Bitmap slikica1;
+			Bitmap slikica2;
+			Bitmap slikica3;
 			
-			int zacetek= stran.indexOf("Ljubljana");
-			String link = stran.substring(stran.indexOf("src=", zacetek)+5, stran.indexOf(".png", zacetek)+4);
-			
-			imageView1.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+link));
+			protected String doInBackground(Void... voids) 
+			{
+				//snamem podatke iz interneta
+				try 
+				{
+					//trenutno stanje //je že xml
+					temperatura = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//t", 0);
+					stanje = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//nn_shortText", 0);
+					smerVetra = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//dd_longText", 0);
+					hitrostVetraKMH = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//ff_val_kmh", 0);
 		
+					//trenutna slika
+					linkTrenutna = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.html");
+					TagNode td = findInfo(linkTrenutna, "//td[@class='nn_icon_wwsyn_icon']/img", 0); //4. slika je edvard rusian-letališče MB
+					String linkec1= td.getAttributeByName("src");
+					trenutnaSlika = getBitmapFromURL("http://meteo.arso.gov.si"+linkec1);
+					
+					// textovna NAPOVED
+					napoved = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_d1-d2_text.html");
+
+					// Napoved 3 dnevna
+					dnevi = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//valid_day");
+					situacije = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//nn_shortText");
+					TempMinimalne = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//tn");
+					TempMaximalne = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//tx");	
+				
+					//slikice za 3 dnevno napoved
+					TagNode linkiSlik = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.html");
+					TagNode sl1 = findInfo(linkiSlik, "//img", 1); 
+					TagNode sl2 = findInfo(linkiSlik, "//img", 2); 
+					TagNode sl3 = findInfo(linkiSlik, "//img", 3); 
+
+					slikica1 = getBitmapFromURL("http://meteo.arso.gov.si"+sl1.getAttributeByName("src"));
+					slikica2 = getBitmapFromURL("http://meteo.arso.gov.si"+sl2.getAttributeByName("src"));
+					slikica3 = getBitmapFromURL("http://meteo.arso.gov.si"+sl3.getAttributeByName("src"));
+
+					
+				} catch (Exception e) 
+				{
+					return "NOK";
+				}
+				
+				
+		        return "OK";
+			}
 			
+			protected void onPostExecute(String rezultat) 
+			{
+
+				//ko potegnem vreme iz neta izpišem podatke
+				if(rezultat=="OK")
+				{
+						try{
+							//trenutno stanje
+							textViev1.setText("Maribor:\n "+stanje.getTextContent()+", "+temperatura.getTextContent()+"°C\n "+smerVetra.getTextContent()+", "+hitrostVetraKMH.getTextContent()+"km/h");
+							
+							//trenutna slika
+							imageView1.setImageBitmap(trenutnaSlika);
 			
-			//NAPOVED
-			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_d1-d2_text.html");
+							// textovna NAPOVED
+							String nap="";
+							for(int i=0; i>-1; ) //nevem koliko odstavkov je v xml-ju(število lahko variira) zato neskončna zanka ki se prekine ko ne najdemo več odstavkov
+							{
+								TagNode odstavek=null;
+								try
+								{
+									odstavek= findInfo(napoved, "//p", i);
+									i++;
+								}catch (Exception e) {
+									textViev2.setText("\nNapoved: Napaka v xpath iskanju\n");
+								}
+								if(odstavek!=null) nap+=" "+odstavek.getText().toString();  
+								else i=-5;
+							}
+							textViev2.setText("\nNapoved:\n"+SparsajSumnike(nap)+" "); 
 			
+							// Napoved 3 dnevna
+							//indexi od 1 naprej ker prvega(danes) izpustimo //pri dnevih pa izločimo CET na koncu niza
+							textViev3.setText(dnevi.item(1).getTextContent().substring(0, dnevi.item(1).getTextContent().indexOf(" "))+"\n"+situacije.item(1).getTextContent()+"\n"+TempMinimalne.item(1).getTextContent()+" | "+TempMaximalne.item(1).getTextContent()+"°C");
+							textViev4.setText(dnevi.item(2).getTextContent().substring(0, dnevi.item(2).getTextContent().indexOf(" "))+"\n"+situacije.item(2).getTextContent()+"\n"+TempMinimalne.item(2).getTextContent()+" | "+TempMaximalne.item(2).getTextContent()+"°C");
+							textViev5.setText(dnevi.item(3).getTextContent().substring(0, dnevi.item(3).getTextContent().indexOf(" "))+"\n"+situacije.item(3).getTextContent()+"\n"+TempMinimalne.item(3).getTextContent()+" | "+TempMaximalne.item(3).getTextContent()+"°C");		
+							
+							//slikice za 3 dnevno napoved
+							imageView2.setImageBitmap(slikica1);
+							imageView3.setImageBitmap(slikica2);
+							imageView4.setImageBitmap(slikica3);
+							
+							//shranim slike na SD kartico
+					    	shraniBmp("trenutnaSlika.PNG", trenutnaSlika);
+					    	shraniBmp("slikica1.PNG", slikica1);
+					    	shraniBmp("slikica2.PNG", slikica2);
+					    	shraniBmp("slikica3.PNG", slikica3);
+					    	//shranim textovne podatke
+					    	shranivdat(textViev1.getText().toString(), "trenutnaNapoved.txt");
+					    	shranivdat(textViev3.getText().toString(), "prviDan.txt");
+					    	shranivdat(textViev4.getText().toString(), "drugiDan.txt");
+					    	shranivdat(textViev5.getText().toString(), "tretjiDan.txt");
+					    	shranivdat(textViev2.getText().toString(), "txtNapoved.txt"); 
+					
+					    	
+					    	textVievOsvezitev.setText(" ");
+
+					    	//shranim datum
+					    	SharedPreferences nazadnje_osvezeno = getSharedPreferences("VREME_OSVEZITEV", 0);
+					        SharedPreferences.Editor editor = nazadnje_osvezeno.edit();
+					        editor.putString("nazadnje_osvezeno_vreme", trenutniCasString());
+					        editor.commit();
+							
 			
-			String napoved = stran.substring(stran.indexOf("<p>")+3, stran.lastIndexOf("</p>"));
+						} catch (Exception e) 
+						{
+							textViev1.setText("Napaka! vOK");
+						}
+					
+			        Toast.makeText(vremeActivity.this,"Končano",Toast.LENGTH_SHORT).show();
+				}
+				else if(rezultat=="NOK")	
+				{
+					textViev1.setText("Napaka! Potrebujete dostop do interneta!");
+					Toast.makeText(vremeActivity.this,"Ni povezave!",Toast.LENGTH_LONG).show();
+				}
+				else Toast.makeText(vremeActivity.this,"Prišlo je do napake",Toast.LENGTH_LONG).show();
+		        
+		        //ko smo z delom zaključili še prekinemo dialog
+				dialogWait.cancel();
+		        
+			}
+
+		}
+		
+
+		public String trenutniCasString()
+		{
+			Time now = new Time();
+			now.setToNow();
+	    	Calendar a= Calendar.getInstance();
+	    	String minuta = now.minute+""; 
+	    	if(minuta.length()<2) minuta="0"+minuta;//vodilna ničla
+	    	
+	    	return (a.getTime().getDate()+"."+((int)(a.getTime().getMonth())+1)+" "+now.hour+":"+minuta);
+		}
+		
+		
+//		public void osveziVreme()
+//		{
+//			try{
+//				//trenutno stanje //je že xml
+//				Node temperatura = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//t", 0);
+//				Node stanje = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//nn_shortText", 0);
+//				Node smerVetra = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//dd_longText", 0);
+//				Node hitrostVetraKMH = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_MARIBOR_SLIVNICA_latest.xml", "//ff_val_kmh", 0);
+//	
+//				textViev1.setText("Maribor:\n "+stanje.getTextContent()+", "+temperatura.getTextContent()+"°C\n "+smerVetra.getTextContent()+", "+hitrostVetraKMH.getTextContent()+"km/h");
+//				
+//				//trenutna slika
+//				TagNode linkTrenutna = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.html");
+//				TagNode td = findInfo(linkTrenutna, "//td[@class='nn_icon_wwsyn_icon']/img", 3); //4. slika je edvard rusian-letališče MB
+//				String linkec1= td.getAttributeByName("src");
+//			
+//				imageView1.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+linkec1));
+//
+//				// textovna NAPOVED
+//				TagNode napoved = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_d1-d2_text.html");
+//				String nap="";
+//				for(int i=0; i>-1; ) //nevem koliko odstavkov je v xml-ju(število lahko variira) zato neskončna zanka ki se prekine ko ne najdemo več odstavkov
+//				{
+//					TagNode odstavek=null;
+//					try
+//					{
+//						odstavek= findInfo(napoved, "//p", i);
+//						i++;
+//					}catch (Exception e) {
+//						textViev2.setText("\nNapoved: Napaka v xpath iskanju\n");
+//					}
+//					if(odstavek!=null) nap+=" "+odstavek.getText().toString();  
+//					else i=-5;
+//				}
+//				textViev2.setText("\nNapoved:\n"+SparsajSumnike(nap)+" "); 
+//
+//				// Napoved 3 dnevna
+//				NodeList dnevi = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//valid_day");
+//				NodeList situacije = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//nn_shortText");
+//				NodeList TempMinimalne = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//tn");
+//				NodeList TempMaximalne = PoisciNaNetu("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml", "//tx");	
+//								//indexi od 1 naprej ker prvega(danes) izpustimo //pri dnevih pa izločimo CET na koncu niza
+//				textViev3.setText(dnevi.item(1).getTextContent().substring(0, dnevi.item(1).getTextContent().indexOf(" "))+"\n"+situacije.item(1).getTextContent()+"\n"+TempMinimalne.item(1).getTextContent()+" | "+TempMaximalne.item(1).getTextContent()+"°C");
+//				textViev4.setText(dnevi.item(2).getTextContent().substring(0, dnevi.item(2).getTextContent().indexOf(" "))+"\n"+situacije.item(2).getTextContent()+"\n"+TempMinimalne.item(2).getTextContent()+" | "+TempMaximalne.item(2).getTextContent()+"°C");
+//				textViev5.setText(dnevi.item(3).getTextContent().substring(0, dnevi.item(3).getTextContent().indexOf(" "))+"\n"+situacije.item(3).getTextContent()+"\n"+TempMinimalne.item(3).getTextContent()+" | "+TempMaximalne.item(3).getTextContent()+"°C");
+//					
+//				//slikice za 3dnevno napoved
+//				
+//				
+//				TagNode linkiSlik = xmlCleaner("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.html");
+//				TagNode sl1 = findInfo(linkiSlik, "//img", 1); 
+//				TagNode sl2 = findInfo(linkiSlik, "//img", 2); 
+//				TagNode sl3 = findInfo(linkiSlik, "//img", 3); 
+//				
+//				imageView2.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+sl1.getAttributeByName("src")));
+//				imageView3.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+sl2.getAttributeByName("src")));
+//				imageView4.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+sl3.getAttributeByName("src")));
+//				
+//
+//			} catch (Exception e) 
+//			{
+//				textViev1.setText("Napaka! Potrebujete dostop do interneta!");
+//			}
+//		}
+		
+		public TagNode xmlCleaner(String url) throws Exception  //html->xml
+		{
+			CleanerProperties props = new CleanerProperties();
+			props.setTranslateSpecialEntities(true);
+			props.setTransResCharsToNCR(true);
+			props.setOmitComments(true);
+			TagNode tagNode;
+			try 
+			{
+				tagNode = new HtmlCleaner(props).clean(new URL(url));
+				return tagNode;
+				
+			} catch (MalformedURLException e) 
+			{
+				e.printStackTrace();
+				throw(e);
+				
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+				throw(e);
+			}
+			
+		}
+		
+		public TagNode findInfo(TagNode node, String XPathExpression, int i) //iskanje ciljnega elementa v XML-ju
+		{
+			TagNode description_node = null;
+			try 
+			{
+				description_node = (TagNode) node.evaluateXPath(XPathExpression)[i]; // i-ti zadetek
+				
+			} catch (XPatherException e) 
+			{
+				e.printStackTrace();
+			}
+			return description_node;
+		}
+		
+		public TagNode[] findInfo(TagNode node, String XPathExpression) //iskanje ciljnega elementa v XML-ju
+		{
+			TagNode[] description_node=null;
+			try 
+			{
+				description_node = (TagNode[]) node.evaluateXPath(XPathExpression); // i-ti zadetek
+				
+			} catch (XPatherException e) 
+			{
+				e.printStackTrace();
+			}
+			return description_node;
+		}
+		
+		public String SparsajSumnike(String besedilo)
+		{
 			String nova="";
 			char[] vmes=new char[6];
-			for (int i=0; i<napoved.length()-5; i++)
+			for (int i=0; i<besedilo.length()-5; i++)
 			{
 				
-				vmes[0]= napoved.charAt(i);
-				vmes[1]= napoved.charAt(i+1);
-				vmes[2]= napoved.charAt(i+2);
-				vmes[3]= napoved.charAt(i+3);
-				vmes[4]= napoved.charAt(i+4);
-				vmes[5]= napoved.charAt(i+5);
+				vmes[0]= besedilo.charAt(i);
+				vmes[1]= besedilo.charAt(i+1);
+				vmes[2]= besedilo.charAt(i+2);
+				vmes[3]= besedilo.charAt(i+3);
+				vmes[4]= besedilo.charAt(i+4);
+				vmes[5]= besedilo.charAt(i+5);
 				
 				
 				if(vmes[0]=='<' && vmes[1]=='p' && vmes[2]=='>')
@@ -177,10 +559,8 @@ public class vremeActivity extends Activity implements OnClickListener
 				else
 				{
 				
-			    nova+=napoved.charAt(i);
+			    nova+=besedilo.charAt(i);
 				}
-				
-
 			}
 
 			nova+=vmes[1];
@@ -189,72 +569,61 @@ public class vremeActivity extends Activity implements OnClickListener
 			nova+=vmes[4];
 			nova+=vmes[5];
 			
-			textViev2.setText("\nNapoved:\n "+nova);
-			
-			
-			// Napoved TEXT
-			
-			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.xml");
-			
-			String[] dan = new String[3];
-			String[] situacija = new String[3];
-			String[] Tmin = new String[3];
-			String[] Tmax = new String[3];
-			zacetek=0;
-			for(int i=0; i<4; i++)
-			{
-				zacetek= stran.indexOf("<valid_day>", zacetek+1);
-				
-				if(i>0) //prvo napoved izpustimo
-				{
-					dan[i-1] = 	stran.substring(zacetek+11, stran.indexOf("</valid_day>", zacetek)-3);
-					situacija[i-1]= stran.substring(stran.indexOf("<nn_shortText>", zacetek)+14, stran.indexOf("</nn_shortText>", zacetek));
-					Tmin[i-1]= 	stran.substring(stran.indexOf("<tn>", zacetek)+4, stran.indexOf("</tn>", zacetek));
-					Tmax[i-1]= 	stran.substring(stran.indexOf("<tx>", zacetek)+4, stran.indexOf("</tx>", zacetek));
-				}
-				
-				textViev3.setText(dan[0]+"\n"+situacija[0]+"\n"+Tmin[0]+"-"+Tmax[0]+"°C");
-				textViev4.setText(dan[1]+"\n"+situacija[1]+"\n"+Tmin[1]+"-"+Tmax[1]+"°C");
-				textViev5.setText(dan[2]+"\n"+situacija[2]+"\n"+Tmin[2]+"-"+Tmax[2]+"°C");
-				
-			}
-
-			
-			
-			//Napoveed SLIKICE
-			
-			stran= executeHttpGet("http://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SLOVENIA_latest.html");
-			
-			String[] linki = new String[3];
-			zacetek=0;
-			for(int i=0; i<4; i++)
-			{
-				zacetek= stran.indexOf("<img src=", zacetek+1);
-				
-				if(i>0) //prvo napoved izpustimo
-				{
-					linki[i-1] = stran.substring(zacetek+10, stran.indexOf(".png", zacetek)+4);
-				}
-			}
-			
-			imageView2.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+linki[0]));
-			imageView3.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+linki[1]));
-			imageView4.setImageBitmap(getBitmapFromURL("http://meteo.arso.gov.si"+linki[2]));
-			
-			
-			
-			
-			}
-			catch (Exception eee) 
-			{
-				textViev1.setText("Napaka! Potrebujete dostop do interneta!");
-				
-			}
-			
-	
+			return nova;
 		}
 		
-		public Bitmap getBitmapFromURL(String src) {
+		public NodeList PoisciNaNetu(String url, String xPathIzraz) throws Exception
+		{
+			NodeList nodes = null;
+	        try
+	        {
+		        InputSource inputSource = new InputSource(url);
+		        XPath xpath = XPathFactory.newInstance().newXPath();
+		       
+		        try
+		        {
+		        nodes = (NodeList) xpath.evaluate(xPathIzraz, inputSource, XPathConstants.NODESET);
+		        }catch (Exception e) {
+		        	textViev1.setText("Napaka v xPath iskanju\n"+e.toString());
+		        	throw(e);
+				}
+
+	        }catch (Exception e) {
+	        	textViev1.setText("Napaka: Potrebujete dostop do interneta!");
+	        	throw(e);
+			}
+	        return nodes;
+		}
+		
+		public Node PoisciNaNetu(String url, String xPathIzraz, int i) throws Exception
+		{
+			Node node = null;
+			NodeList nodes = null;
+	        try
+	        {
+		        InputSource inputSource = new InputSource(url);
+		        XPath xpath = XPathFactory.newInstance().newXPath();
+		       
+		        try
+		        {
+		        nodes = (NodeList) xpath.evaluate(xPathIzraz, inputSource, XPathConstants.NODESET);
+		        node = nodes.item(i);
+		        }catch (Exception e) {
+		        	textViev1.setText("Napaka v xPath iskanju\n"+e.toString());
+		        	throw(e);
+				}
+
+	        }catch (Exception e) {
+	        	textViev1.setText("Napaka: Potrebujete dostop do interneta!");
+	        	throw(e);
+			}
+	        return node;
+		}
+		
+		
+		
+		public Bitmap getBitmapFromURL(String src) 
+		{
 	        try {
 	            Log.e("src",src);
 	            URL url = new URL(src);
@@ -271,118 +640,6 @@ public class vremeActivity extends Activity implements OnClickListener
 	            return null;
 	        }
 	    }
-
-		public String executeHttpGet(String naslov) throws Exception 
-		{
-			String page;
-		    BufferedReader in = null;
-		    try {
-		        HttpClient client = new DefaultHttpClient();
-		        HttpGet request = new HttpGet();
-		        request.setURI(new URI(naslov));
-		        HttpResponse response = client.execute(request);
-		        long dolzina = response.getEntity().getContentLength();
-		        in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		        StringBuffer sb = new StringBuffer("");
-		        String line = "";
-		        String NL = System.getProperty("line.separator");
-		        
-		        long total=0;
-		        while ((line = in.readLine()) != null) 
-		        {
-		            sb.append(line + NL);
-		            //publishProgress((int)(total*100/dolzina));
-		        }
-		        
-		        
-		        in.close();
-		        page = sb.toString();
-		        //System.out.println(page);
-		        
-		        
-		        } 
-		    finally 
-			    {
-				        if (in != null) 
-				        {
-				            try {
-				                	in.close();
-				                } 
-				            	catch (IOException e) 
-				            	{
-				            		e.printStackTrace();
-				                }
-				        }
-			     }
-		    
-		    return page;
-		    
-		    
-		}
-			/*
-		    private class OsveziVreme extends AsyncTask<String, Integer, String>
-		    {
-		    	@Override
-				protected void onPreExecute() 
-		    	{
-		    		
-		    		progressBar1 = new ProgressDialog(vremeActivity.this);
-		    		progressBar1.setMessage("Prenos poteka");
-		    		progressBar1.setIndeterminate(false);
-		    		progressBar1.setMax(100);
-		    		progressBar1.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		    		progressBar1.setCancelable(true);
-		    		progressBar1.show();
-		    	}
-
-		    	
-		    	
-		    	
-		        @Override
-		        protected String doInBackground(String... url) 
-		        {
-		        	String stran = new String();
-					 
-					try
-					{
-					stran= executeHttpGet();
-
-					String temperatura = stran.substring(stran.indexOf("<t>")+3, stran.indexOf("</t>"));
-					String stanje = stran.substring(stran.indexOf("<nn_shortText>")+14, stran.indexOf("</nn_shortText>"));
-					String smerVetra = stran.substring(stran.indexOf("<dd_longText>")+13, stran.indexOf("</dd_longText>"));
-					String hitrostVetraKMH = stran.substring(stran.indexOf("<ff_val_kmh>")+12, stran.indexOf("</ff_val_kmh>"));
-					
-					textViev1.setText("Maribor:\n "+stanje+", "+temperatura+"°C\n "+smerVetra+", "+hitrostVetraKMH+"km/h");
-					
-					}
-					catch (Exception eee) 
-					{
-						textViev1.setText("Napaka! Potrebujete dostop do interneta!");
-					}
-		        	
-		        
-		            return null;
-		        }
-		        
-		        protected void onProgressUpdate(Integer... args)
-		        {
-		        	progressBar1.setProgress(args[0]);
-		        }
-		        protected void onPostExecute(String arg) {
-					
-					progressBar1.cancel();
-				}
-		        
-
-		    }
-		    
 			
-			*/
-
-		//pridobim HTML
-		
-	    
-	
-	
 }
 
