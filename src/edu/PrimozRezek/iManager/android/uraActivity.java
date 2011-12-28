@@ -64,7 +64,7 @@ public class uraActivity extends Activity implements OnClickListener {
         
         textViev1 = (TextView) findViewById(R.id.textView1);
         g = new Gumbi( this, id);
-        mainLL = (LinearLayout) findViewById(R.id.mainLL);
+        mainLL = (LinearLayout) findViewById(R.id.mainLL); 
         mainLL.addView(g,0);
         ura = new AnalogClock(this);
         

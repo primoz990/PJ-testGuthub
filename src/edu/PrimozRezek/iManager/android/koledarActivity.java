@@ -86,10 +86,7 @@ public class koledarActivity extends Activity implements OnClickListener {
 				this.startActivity(dodajAct);
 				
 			break;
-			case R.id.Pretvornikbutton:
-				Intent dodajPrAct = new Intent(this, PretvornikValutActivity.class);
-				this.startActivity(dodajPrAct);
-			break;
+
 		}
 
 		

@@ -32,7 +32,9 @@ import android.widget.TextView;
 
 
 
-public class IzklopBudilkeActivity extends Activity {
+public class IzklopBudilkeActivity extends Activity 
+{
+	TextView txtViewStevilo;
     
 	//vklop ekrana
 	PowerManager powMaN;
@@ -47,6 +49,10 @@ public class IzklopBudilkeActivity extends Activity {
 	double gravityZ=0;
 	String rezultati="";
 	//ZVOK: http://developer.android.com/guide/topics/media/audio-capture.html
+	
+	//nastavitve
+	int stevecUdarcev=0;;
+	int STEVILO_UDARCEV;
 	
 	public SensorEventListener SenLis = new SensorEventListener() {
 		
@@ -70,10 +76,16 @@ public class IzklopBudilkeActivity extends Activity {
 				
 				if((Gx>5 && Gy>5) || (Gx<-5 && Gy<-5) || (Gx<-5 && Gy>5) || (Gx>5 && Gy<-5)) 
 				{
-					
-					
+					stevecUdarcev++;
+					if(stevecUdarcev<STEVILO_UDARCEV)
+					{
+						txtViewStevilo.setText((STEVILO_UDARCEV-stevecUdarcev)+" ");//prikaziStevilo();
+					}
+					else
+					{
 					wakeL.release();
 					System.exit(0);
+					}
 				}
 
 			}
@@ -85,7 +97,10 @@ public class IzklopBudilkeActivity extends Activity {
 		}
 	};
 	
-	
+	public void prikaziStevilo()
+	{
+		txtViewStevilo.setText(STEVILO_UDARCEV-stevecUdarcev);
+	}
 	
 	
     @Override
@@ -94,7 +109,7 @@ public class IzklopBudilkeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.budilka);
         
-        //txtViev1 = (TextView) findViewById(R.id.textViev1);
+        txtViewStevilo = (TextView) findViewById(R.id.textViewKolikoKratSe);
         
         SenMan = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         SenMan.registerListener(SenLis, SenMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -114,7 +129,9 @@ public class IzklopBudilkeActivity extends Activity {
 		editor2.putBoolean("budilka_vklopljena", false);
 		editor2.commit();
 
-        
+		STEVILO_UDARCEV=5;
+		txtViewStevilo.setText(STEVILO_UDARCEV+"");
+		
         startPlaying();
     }
     
