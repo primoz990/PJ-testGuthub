@@ -6,5 +6,14 @@
         <Button android:id="@+id/gumbVreme" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:background="@drawable/vreme" android:textColor="@color/bela" android:text="Vreme" android:textStyle="bold"></Button>
         <Button android:id="@+id/gumbRss" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:background="@drawable/rss"></Button>
         <Button android:id="@+id/gumbKoledar" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:text="Koledar" android:background="@drawable/koledar" android:textColor="@color/bela" android:textStyle="bold"></Button>
-        <Button android:id="@+id/gumbNastavitve" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1" android:background="@drawable/nastavitve" android:textColor="@color/bela" android:textStyle="bold" android:text="Konfig."></Button>
+
+        <Button
+            android:id="@+id/gumbValute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/valute"
+            android:textColor="@color/bela"
+            android:textStyle="bold">
+</Button>
     </LinearLayout>

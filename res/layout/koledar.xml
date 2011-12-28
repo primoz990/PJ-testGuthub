@@ -10,13 +10,6 @@
             <Button android:text="Dodaj Dogodek" android:layout_height="wrap_content" android:onClick="onClick" android:layout_width="wrap_content" android:id="@+id/buttonDodajDogodek"></Button>
             <Button android:text="Pretvornik Valut" android:layout_width="wrap_content" android:layout_height="match_parent" android:id="@+id/Pretvornikbutton" android:onClick="onClick"></Button>
 
-            <Button
-                android:id="@+id/buttonWeka"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Weka" />
-
         </LinearLayout>
 
         <TextView

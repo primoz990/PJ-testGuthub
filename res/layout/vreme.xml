@@ -4,26 +4,122 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/mainLL" android:background="@drawable/ozadje">
-    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_gravity="center" android:gravity="center" android:layout_height="100dip">
-        <ImageView android:id="@+id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon"></ImageView>
-        <TextView android:layout_gravity="center" android:layout_width="wrap_content" android:id="@+id/textView1" android:text="Maribor:" android:layout_height="wrap_content" android:gravity="center"></TextView>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout5" android:layout_height="wrap_content" android:orientation="vertical">
-        <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout7" android:layout_height="wrap_content" android:gravity="center">
-            <ImageView android:id="@+id/imageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
-            <ImageView android:id="@+id/imageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
-            <ImageView android:id="@+id/imageView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
-        </LinearLayout>
-        <LinearLayout android:id="@+id/linearLayout6" android:layout_height="match_parent" android:layout_width="match_parent" android:gravity="center">
-            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView3" android:text="TextView" android:layout_height="wrap_content"></TextView>
-            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView4" android:text="TextView" android:layout_height="wrap_content"></TextView>
-            <TextView android:layout_weight="1" android:layout_width="wrap_content" android:gravity="center" android:id="@+id/textView5" android:text="TextView" android:layout_height="wrap_content"></TextView>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="wrap_content">
-        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Napoved:"></TextView>
-    </LinearLayout>
-    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout1">
-        <Button android:layout_width="wrap_content" android:text="Osveži" android:gravity="center" android:id="@+id/button1" android:layout_gravity="center" android:layout_height="wrap_content"></Button>
-    </LinearLayout>
+    
+    
+        <ScrollView
+	    android:id="@+id/scrollView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+    
+		    <LinearLayout
+		        android:id="@+id/linearLayoutZaScrol"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical" >
+		    
+					    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_gravity="center" android:gravity="center" android:layout_height="100dip">
+					        <ImageView android:id="@+id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon"></ImageView>
+
+					        <TextView
+					            android:id="@+id/textViewTren1"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+					            android:layout_gravity="center"
+					            android:gravity="center"
+					            android:text="Maribor:" >
+</TextView>
+					    </LinearLayout>
+					    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout5" android:layout_height="wrap_content" android:orientation="vertical">
+					        <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout7" android:layout_height="wrap_content" android:gravity="center">
+					            <ImageView android:id="@+id/imageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+					            <ImageView android:id="@+id/imageView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+					            <ImageView android:id="@+id/imageView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon" android:layout_weight="1"></ImageView>
+					        </LinearLayout>
+					        <LinearLayout android:id="@+id/linearLayout6" android:layout_height="match_parent" android:layout_width="match_parent" android:gravity="center">
+
+					            <TextView
+					                android:id="@+id/textViewDan3"
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:layout_weight="1"
+					                android:gravity="center"
+					                android:text="TextView" >
+</TextView>
+
+					            <TextView
+					                android:id="@+id/textViewDan4"
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:layout_weight="1"
+					                android:gravity="center"
+					                android:text="TextView" >
+</TextView>
+
+					            <TextView
+					                android:id="@+id/textViewDan5"
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:layout_weight="1"
+					                android:gravity="center"
+					                android:text="TextView" >
+</TextView>
+					        </LinearLayout>
+					    </LinearLayout>
+					    <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+					        <TextView
+					            android:id="@+id/textViewNapoved2"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+					            android:text="Napoved:" >
+</TextView>
+					    </LinearLayout>
+
+					    <LinearLayout
+					        android:id="@+id/linearLayout1"
+					        android:layout_width="match_parent"
+					        android:layout_height="85px"
+					        android:gravity="center"
+					        android:orientation="horizontal" >
+
+					        <LinearLayout
+					            android:id="@+id/linearLayout2"
+					            android:layout_width="wrap_content"
+					            android:layout_height="match_parent"
+					            android:gravity="center"
+					            android:orientation="vertical" >
+
+					            <TextView
+					                android:id="@+id/textViewNazadnjeOsvezenoVreme"
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:text="Medium Text"
+					                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+					        </LinearLayout>
+
+					        <LinearLayout
+					            android:id="@+id/linearLayout8"
+					            android:layout_width="120px"
+					            android:layout_height="wrap_content"
+					            android:gravity="center" >
+
+					            <Button
+					                android:id="@+id/button1"
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:layout_gravity="center|top"
+					                android:gravity="center"
+					                android:text="Osveži" />
+
+					        </LinearLayout>
+
+					    </LinearLayout>
+		
+		         
+		        
+		    </LinearLayout>
+
+      </ScrollView>
+        
 </LinearLayout>

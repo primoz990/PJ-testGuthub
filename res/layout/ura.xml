@@ -28,9 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Bujenje" >
+            android:text="Budilka" >
 </Button>
-        <CheckBox android:id="@+id/checkBox1" android:layout_width="wrap_content" android:layout_height="wrap_content" style=" " android:text="    6 : 30   "></CheckBox>
+
+        <CheckBox
+            android:id="@+id/checkBoxBudilka"
+            style=" "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    6 : 30   " android:onClick="onClick">
+</CheckBox>
     </LinearLayout>
     <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">
 
@@ -40,12 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Počitek" >
+            android:text="Odštevalnik" > 
 </Button>
-        <CheckBox android:id="@+id/checkBox2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="   16 : 30   "></CheckBox>
-    </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="50dip" android:layout_weight="1">
-        <Button android:layout_height="wrap_content" android:id="@+id/button4" android:text="Služba" android:layout_width="wrap_content" android:layout_weight="1" android:onClick="onClick"></Button>
-        <CheckBox android:id="@+id/checkBox3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="    5 : 30   "></CheckBox>
+
+        <CheckBox
+            android:id="@+id/checkBoxOdstevalnik"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   16 : 30   " android:onClick="onClick">
+</CheckBox>
     </LinearLayout>
 </LinearLayout>
