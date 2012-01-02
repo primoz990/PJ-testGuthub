@@ -1,7 +1,7 @@
 package edu.PrimozRezek.iManager.android.BAZA;
 
 
-public class Koledar 
+public class KoledarBaza 
 {
 	public String datum;
 	public String NaslovDogodka;

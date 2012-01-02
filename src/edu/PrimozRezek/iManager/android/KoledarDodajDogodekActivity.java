@@ -2,7 +2,7 @@ package edu.PrimozRezek.iManager.android;
 
 
 import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
-import edu.PrimozRezek.iManager.android.BAZA.Koledar;
+import edu.PrimozRezek.iManager.android.BAZA.KoledarBaza;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,11 +32,11 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
         
         db = new DBAdapterKoledar(this);
         
-        datePicker1 = (DatePicker) findViewById(R.id.datePicker1);
+       // datePicker1 = (DatePicker) findViewById(R.id.datePicker1);
         editTextNaslov = (EditText) findViewById(R.id.editTextDodajNaslov);
         editTextOpis = (EditText) findViewById(R.id.editTextDodajOpis);
         gumbDodaj = (Button) findViewById(R.id.buttonShraniDogodek);
-        spnPrior= (Spinner) findViewById(R.id.spinnerPrioriteta);
+        spnPrior= (Spinner) findViewById(R.id.spinnerIzbiraKoledarja);
     }
 	
 	@Override
@@ -54,7 +54,7 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
 	@Override
 	public void onClick(View v) 
 	{
-		Koledar x = new Koledar();
+		KoledarBaza x = new KoledarBaza();
 
 		String d = datePicker1.getDayOfMonth()+"."+(datePicker1.getMonth()+1)+"."+datePicker1.getYear();	
 		x.setDatum(d);
@@ -68,7 +68,7 @@ public class KoledarDodajDogodekActivity extends Activity implements OnClickList
 	
 	
 	
-	public void addDB(Koledar x) {
+	public void addDB(KoledarBaza x) {
 		db.open();
 		x.setDbID(db.insertDogodek(x));
 		db.close();	

@@ -4,38 +4,24 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:orientation="vertical" android:background="@drawable/ozadje">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="20px" >
-</LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout1" android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center">
-        <DatePicker android:id="@+id/datePicker1" android:layout_width="wrap_content" android:layout_height="wrap_content"></DatePicker>
-    </LinearLayout>
+        android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="20px" >
-</LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout01" android:layout_width="match_parent" android:gravity="center">
-        <TextView android:layout_height="wrap_content" android:id="@+id/TextView01" android:layout_width="wrap_content" android:text=" Naslov:"></TextView>
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editTextDodajNaslov"
-            android:layout_width="250px"
-            android:layout_height="wrap_content" >
-</EditText>
-    </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_width="match_parent" android:gravity="center">
-        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="      Opis:"></TextView>
-
-        <EditText
-            android:id="@+id/editTextDodajOpis"
-            android:layout_width="250px"
-            android:layout_height="100px" >
-</EditText>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:orientation="vertical" >
+            </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -48,13 +34,195 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prioriteta: " />
+            android:text="Koledar: " />
 
         <Spinner
-            android:id="@+id/spinnerPrioriteta"
+            android:id="@+id/spinnerIzbiraKoledarja"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Naslov:" />
+
+        <EditText
+            android:id="@+id/editTextDodajNaslov"
+            android:layout_width="250px"
+            android:layout_height="wrap_content" >
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="40px"
+        android:gravity="bottom" >
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trajanje:" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Od:   " />
+
+        <Button
+            android:id="@+id/buttonOdDatum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datum" android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/buttonOdCas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Čas" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do:   " />
+
+        <Button
+            android:id="@+id/buttonDoDatum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datum" android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/buttonDoCas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Čas" android:onClick="onClick"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/linearLayout1" android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="match_parent" android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/LinearLayout03"
+            android:layout_width="match_parent"
+            android:layout_height="20px" >
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lokacija:" />
+
+        <EditText
+            android:id="@+id/EditTextLokacija"
+            android:layout_width="190px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCeliDan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Celi dan"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout05"
+            android:layout_width="match_parent"
+            android:layout_height="20px" >
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/checkBoxopozorilo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="Opozorilo: " />
+
+        <Spinner
+            android:id="@+id/spinnerOpozorilo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_width="match_parent" android:gravity="center">
+        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="      Opis:"></TextView>
+
+        <EditText
+            android:id="@+id/editTextDodajOpis"
+            android:layout_width="250px"
+            android:layout_height="100px" >
+</EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout04"
+        android:layout_width="match_parent"
+        android:layout_height="20px" >
     </LinearLayout>
 
     <LinearLayout
@@ -72,4 +240,6 @@
             android:text="Dodaj" >
 </Button>
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

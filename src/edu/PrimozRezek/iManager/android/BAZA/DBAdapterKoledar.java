@@ -49,7 +49,7 @@ public class DBAdapterKoledar implements BaseColumns {
 	}
 
 	//---insert a Koledar
-	public long insertDogodek(Koledar k) 
+	public long insertDogodek(KoledarBaza k) 
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(DATUM, k.getDatum().toString());
@@ -105,7 +105,7 @@ public class DBAdapterKoledar implements BaseColumns {
 	}
 
 	//---update---
-	public boolean updateDogodek(Koledar tmp) 
+	public boolean updateDogodek(KoledarBaza tmp) 
 	{
 		ContentValues args = new ContentValues();
 		args.put(DATUM, tmp.getDatum().toString());

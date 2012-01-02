@@ -4,6 +4,7 @@ package edu.PrimozRezek.iManager.android;
 // http://w2davids.wordpress.com/android-simple-calendar/
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,14 +16,14 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
-import edu.PrimozRezek.iManager.android.BAZA.Koledar;
+import edu.PrimozRezek.iManager.android.BAZA.KoledarBaza;
 
 
 public class koledarActivity extends Activity implements OnClickListener {
 	
 	public static final int id=2;
 
-	List<Koledar> dogodki = new ArrayList<Koledar>();
+	List<KoledarBaza> dogodki = new ArrayList<KoledarBaza>();
 	DBAdapterKoledar db;
 	Gumbi g;
 	LinearLayout mainLL;
@@ -82,7 +83,10 @@ public class koledarActivity extends Activity implements OnClickListener {
 		{
 			case R.id.buttonDodajDogodek:
 	
-				Intent dodajAct = new Intent(this, KoledarDodajDogodekActivity.class);
+				PrenosPodatkov p = new PrenosPodatkov();
+				p.setIzbranDatumIzKoledarja(new Date(112, 11, 31, 23, 59));
+
+				Intent dodajAct = new Intent(this, CalendarActivity.class);
 				this.startActivity(dodajAct);
 				
 			break;
@@ -95,9 +99,9 @@ public class koledarActivity extends Activity implements OnClickListener {
 	public void fillFromDB() {
 		db.open();
 		Cursor c = db.getAll();
-		Koledar tmp;
+		KoledarBaza tmp;
 		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			tmp = new Koledar();
+			tmp = new KoledarBaza();
 			
 			//pretvorba iz string v DATE
 			/*
@@ -125,55 +129,7 @@ public class koledarActivity extends Activity implements OnClickListener {
 		db.close();
 	}
 	
-	//BAZA
-	/*
-	 public void fillFromDB() {
-		db.open();
-		Cursor c = db.getAll();
-		Stevec tmp;
-		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			tmp = new Stevec();
-			tmp.setName(c.getString(DBAdapterStevec.POS_NAME));
-			tmp.setStanje(c.getInt(DBAdapterStevec.POS_VALUE));
-			tmp.setDbID(c.getLong(DBAdapterStevec.POS__ID));
-			lista.add(tmp); 
-		}
-		c.close();
-		db.close();
-	}
-	public void addDB(Stevec s) {
-		db.open();
-		s.setDbID(db.insertStevc(s));
-		db.close();	
-	}
 
-	
-	//DB dodano
-	public void fillFromDBRezultati() {
-		db1.open();
-		Cursor c = db1.getAll();
-		Rezultat tmp;
-		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			tmp = new Rezultat();
-			tmp.setIme(c.getString(DBAdapterRezultat.POS_NAME));
-			tmp.setTock(c.getInt(DBAdapterRezultat.POS_STANJE));
-			tmp.setId(c.getLong(DBAdapterRezultat.POS__ID));
-			rezultati.add(tmp); 
-		}
-		c.close();
-		db1.close();
-	}
-	public void addDBRezultat(Rezultat s) {
-		db1.open();
-		s.setId(db1.insertRezultat(s));
-		db1.close();	
-	}	//DB konec
-	public void remove(Stevec a) {
-		if (a!=null)
-		stevci.remove(a);  //Step 4.10 Globalna lista
-	}
-	 
-	 */
 	
 	
 	
