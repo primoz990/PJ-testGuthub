@@ -47,14 +47,15 @@
  * 
  */
 
-package edu.PrimozRezek.iManager.android;
+package edu.PrimozRezek.iManager.android.Koledar;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.PrimozRezek.iManager.android.Koledar.Dogodek;
-import edu.PrimozRezek.iManager.android.Koledar.Koledar;
+import edu.PrimozRezek.iManager.android.R;
+import edu.PrimozRezek.iManager.android.R.id;
+import edu.PrimozRezek.iManager.android.R.layout;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -78,7 +79,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class CalendarActivity extends Activity implements OnClickListener
+public class DodajanjeDogodkaVCalendarActivity extends Activity implements OnClickListener
 {
 
 	static final int TIME_DIALOG_ID_OD = 0;
@@ -162,14 +163,14 @@ public class CalendarActivity extends Activity implements OnClickListener
 		switch (id) 
 		{
 			case TIME_DIALOG_ID_OD:
-				return new TimePickerDialog(this, mTimeSetListener, 8, 0, true);
+				return new TimePickerDialog(this, mTimeSetListener, Od.getHours(), Od.getMinutes(), true);
 			case TIME_DIALOG_ID_DO:
-				return new TimePickerDialog(this, mTimeSetListener2, 9, 0, true);
+				return new TimePickerDialog(this, mTimeSetListener2, Do.getHours(), Do.getMinutes(), true);
 				
 			case DATE_DIALOG_ID_OD:
-				return new DatePickerDialog(this, mDateSetListener, 2011, 11, 31);
+				return new DatePickerDialog(this, mDateSetListener, Od.getYear()+1900, Od.getMonth(), Od.getDate());
 			case DATE_DIALOG_ID_DO:
-				return new DatePickerDialog(this, mDateSetListener2, 2011, 11, 31);
+				return new DatePickerDialog(this, mDateSetListener2, Do.getYear()+1900, Do.getMonth(), Do.getDate());
 		}
 	return null;
 	}
@@ -194,25 +195,28 @@ public class CalendarActivity extends Activity implements OnClickListener
         CHKBXopozorilo = (CheckBox) findViewById(R.id.checkBoxopozorilo);
         SPNopozorilo = (Spinner) findViewById(R.id.spinnerOpozorilo);
         
-        gumbCasOd.setText("8:00");
-        gumbCasDo.setText("9:00");
-        //to se bo nastavljalo na izbrani datum iz koledar API-ja
+
         
-      //PrenosPodatkov a = new PrenosPodatkov();
-        //(a.getIzbranDatumIzKoledarja().getDate()+"."+a.getIzbranDatumIzKoledarja().getMonth()+"."+a.getIzbranDatumIzKoledarja().getYear()+" "+a.getIzbranDatumIzKoledarja().getHours()+":"+a.getIzbranDatumIzKoledarja().getMinutes());
+        PrenosPodatkov a = new PrenosPodatkov();
     
+        int dan=a.getIzbranDatumIzKoledarja().getDate();
+        int mesec=a.getIzbranDatumIzKoledarja().getMonth();
+        int leto=a.getIzbranDatumIzKoledarja().getYear();
         
-        gumbDatumOd.setText("1.1.2012");
-        gumbDatumDo.setText("1.1.2012");
+        String nizDatum = dan+"."+(mesec+1)+"."+(leto+1900);
         
-        Od = new Date(2012-1900, 0, 1, 8, 30);
-        Do = new Date(2012-1900, 0, 1, 9, 30);
+        gumbDatumOd.setText(nizDatum);
+        gumbDatumDo.setText(nizDatum);
         
- 
+        gumbCasOd.setText("8:30");
+        gumbCasDo.setText("9:30");
+        
+        Od = new Date(leto, mesec, dan, 8, 30);
+        Do = new Date(leto, mesec, dan, 9, 30);
+        
         ListSelectedCalendars(); //poišče vse možne koledarje in jih napolni v spinner
         
         SPNizbiraKoledarja.setSelection(2); // to bo iz sharedPreferences
-        
         
     }
 
@@ -226,7 +230,7 @@ public class CalendarActivity extends Activity implements OnClickListener
 		case R.id.buttonShraniDogodek:
 		
 		 try {
-	            Log.i(DEBUG_TAG, "Starting Calendar Test"); 
+//	            Log.i(DEBUG_TAG, "Starting Calendar Test"); 
 	            
 	            int IzbranKoledarID = SPNizbiraKoledarja.getSelectedItemPosition()+1; 
 
@@ -244,16 +248,7 @@ public class CalendarActivity extends Activity implements OnClickListener
 	            	//dodam dogodek v izbran koledar
 	                Uri newEvent = MakeNewCalendarEntry(IzbranKoledarID, dog);
 	                int eventID = Integer.parseInt(newEvent.getLastPathSegment());
-	                ListCalendarEntry(eventID);
-	                
-	                // uncomment these to show updating and deleting entries
 
-	                //UpdateCalendarEntry(eventID);
-	                //ListCalendarEntrySummary(eventID);
-	                //DeleteCalendarEntry(eventID);
-	                
-	                //ListCalendarEntrySummary(eventID);
-	                ListAllCalendarEntries(IzbranKoledarID);
 	               
 	            } else 
 	            {
@@ -261,6 +256,7 @@ public class CalendarActivity extends Activity implements OnClickListener
 	            }
 
 	            Toast.makeText(this, "Dogodek dodan", Toast.LENGTH_SHORT).show();
+	            finish();
 
 
 	        } catch (Exception e) 
@@ -271,9 +267,6 @@ public class CalendarActivity extends Activity implements OnClickListener
 	    break;
 		case R.id.buttonOdCas:
 			showDialog(TIME_DIALOG_ID_OD);
-			
-			
-			
 		break;
 		case R.id.buttonDoCas:
 			showDialog(TIME_DIALOG_ID_DO);
@@ -284,6 +277,29 @@ public class CalendarActivity extends Activity implements OnClickListener
 		case R.id.buttonDoDatum:
 			showDialog(DATE_DIALOG_ID_DO);
 		break;
+		case R.id.checkBoxCeliDan:
+			if(CHKBXceliDan.isChecked())
+			{
+				gumbCasDo.setText("");
+				gumbCasOd.setText("");
+				
+				gumbCasDo.setEnabled(false);
+				gumbCasOd.setEnabled(false);
+			}
+			else
+			{
+				gumbCasDo.setEnabled(true);
+				gumbCasOd.setEnabled(true);
+		        
+				String minute = Do.getMinutes()+"";
+				if(minute.length()==1) minute = "0"+minute;
+				gumbCasDo.setText(Do.getHours()+":"+minute);
+				minute = Od.getMinutes()+"";
+				if(minute.length()==1) minute = "0"+minute;
+		        gumbCasOd.setText(Od.getHours()+":"+minute);
+			}
+		break;
+		
 		}
 		
 	}
@@ -306,7 +322,7 @@ public class CalendarActivity extends Activity implements OnClickListener
         if (managedCursor != null && managedCursor.moveToFirst()) 
         {
 
-            Log.i(DEBUG_TAG, "Listing Selected Calendars Only");
+//            Log.i(DEBUG_TAG, "Listing Selected Calendars Only");
 
             int nameColumn = managedCursor.getColumnIndex("name");
             int idColumn = managedCursor.getColumnIndex("_id");
@@ -315,7 +331,7 @@ public class CalendarActivity extends Activity implements OnClickListener
             	// dobimo ime koledarja
                 String calName = managedCursor.getString(nameColumn);
                 String calId = managedCursor.getString(idColumn);
-                Log.i(DEBUG_TAG, "Found Calendar '" + calName + "' (ID=" + calId + ")");
+//                Log.i(DEBUG_TAG, "Found Calendar '" + calName + "' (ID=" + calId + ")");
 
                 koledarji.add(new Koledar(Integer.parseInt(calId) ,calName));
                 
@@ -347,103 +363,6 @@ public class CalendarActivity extends Activity implements OnClickListener
 
     }
 
-    private void ListAllCalendarDetails() 
-    {
-        Cursor managedCursor = getCalendarManagedCursor(null, null, "calendars");
-
-        if (managedCursor != null && managedCursor.moveToFirst()) 
-        {
-
-            Log.i(DEBUG_TAG, "Listing Calendars with Details");
-
-            do {
-                Log.i(DEBUG_TAG, "**START Calendar Description**");
-
-                for (int i = 0; i < managedCursor.getColumnCount(); i++) 
-                {
-                    Log.i(DEBUG_TAG, managedCursor.getColumnName(i) + "=" + managedCursor.getString(i));
-                }
-                
-                Log.i(DEBUG_TAG, "**END Calendar Description**");
-            } while (managedCursor.moveToNext());
-        } else {
-            Log.i(DEBUG_TAG, "No Calendars");
-        }
-
-    }
-
-    private void ListAllCalendarEntries(int calID) 
-    {
-
-        Cursor managedCursor = getCalendarManagedCursor(null, "calendar_id=" + calID, "events");
-
-        if (managedCursor != null && managedCursor.moveToFirst()) 
-        {
-            Log.i(DEBUG_TAG, "Listing Calendar Event Details");
-
-            do {
-
-                Log.i(DEBUG_TAG, "**START Calendar Event Description**");
-
-                for (int i = 0; i < managedCursor.getColumnCount(); i++) 
-                {
-                    Log.i(DEBUG_TAG, managedCursor.getColumnName(i) + "=" + managedCursor.getString(i));
-                }
-                Log.i(DEBUG_TAG, "**END Calendar Event Description**");
-            } while (managedCursor.moveToNext());
-        } else {
-            Log.i(DEBUG_TAG, "No Calendars");
-        }
-
-    }
-
-    private void ListCalendarEntry(int eventId) {
-        Cursor managedCursor = getCalendarManagedCursor(null, null, "events/" + eventId);
-    
-        if (managedCursor != null && managedCursor.moveToFirst()) {
-
-            Log.i(DEBUG_TAG, "Listing Calendar Event Details");
-
-            do {
-                Log.i(DEBUG_TAG, "**START Calendar Event Description**");
-
-                for (int i = 0; i < managedCursor.getColumnCount(); i++) 
-                {
-                    Log.i(DEBUG_TAG, managedCursor.getColumnName(i) + "=" + managedCursor.getString(i));
-                }
-                
-                Log.i(DEBUG_TAG, "**END Calendar Event Description**");
-            } while (managedCursor.moveToNext());
-        } else {
-            Log.i(DEBUG_TAG, "No Calendar Entry");
-        }
-
-    }
-
-    private void ListCalendarEntrySummary(int eventId) {
-        String[] projection = new String[] { "_id", "title", "dtstart" };
-        Cursor managedCursor = getCalendarManagedCursor(projection, null, "events/" + eventId);
-
-        if (managedCursor != null && managedCursor.moveToFirst()) {
-
-            Log.i(DEBUG_TAG, "Listing Calendar Event Details");
-
-            do {
-
-                Log.i(DEBUG_TAG, "**START Calendar Event Description**");
-
-                for (int i = 0; i < managedCursor.getColumnCount(); i++) 
-                {
-                    Log.i(DEBUG_TAG, managedCursor.getColumnName(i) + "="+ managedCursor.getString(i));
-                }
-                
-                Log.i(DEBUG_TAG, "**END Calendar Event Description**");
-            } while (managedCursor.moveToNext());
-        } else {
-            Log.i(DEBUG_TAG, "No Calendar Entry");
-        }
-
-    }
 
     private Uri MakeNewCalendarEntry(int calId, Dogodek dogodek) //http://stackoverflow.com/questions/5976098/how-to-set-reminder-in-android
     {
@@ -489,38 +408,6 @@ public class CalendarActivity extends Activity implements OnClickListener
     }
 
 
-
-    private int UpdateCalendarEntry(int entryID) {
-        int iNumRowsUpdated = 0;
-
-        ContentValues event = new ContentValues();
-
-        event.put("title", "Changed Event Title");
-        event.put("hasAlarm", 1); // 0 for false, 1 for true
-
-        Uri eventsUri = Uri.parse(getCalendarUriBase()+"events");
-        Uri eventUri = ContentUris.withAppendedId(eventsUri, entryID);
-
-        iNumRowsUpdated = getContentResolver().update(eventUri, event, null,
-                null);
-
-        Log.i(DEBUG_TAG, "Updated " + iNumRowsUpdated + " calendar entry.");
-
-        return iNumRowsUpdated;
-    }
-
-    private int DeleteCalendarEntry(int entryID) {
-        int iNumRowsDeleted = 0;
-
-        Uri eventsUri = Uri.parse(getCalendarUriBase()+"events");
-        Uri eventUri = ContentUris.withAppendedId(eventsUri, entryID);
-        iNumRowsDeleted = getContentResolver().delete(eventUri, null, null);
-
-        Log.i(DEBUG_TAG, "Deleted " + iNumRowsDeleted + " calendar entry.");
-
-        return iNumRowsDeleted;
-    }
-
     /**
      * @param projection
      * @param selection
@@ -536,8 +423,7 @@ public class CalendarActivity extends Activity implements OnClickListener
             managedCursor = managedQuery(calendars, projection, selection,
                     null, null);
         } catch (IllegalArgumentException e) {
-            Log.w(DEBUG_TAG, "Failed to get provider at ["
-                    + calendars.toString() + "]");
+            Log.w(DEBUG_TAG, "Failed to get provider at ["+ calendars.toString() + "]");
         }
 
         if (managedCursor == null) {
@@ -547,8 +433,7 @@ public class CalendarActivity extends Activity implements OnClickListener
                 managedCursor = managedQuery(calendars, projection, selection,
                         null, null);
             } catch (IllegalArgumentException e) {
-                Log.w(DEBUG_TAG, "Failed to get provider at ["
-                        + calendars.toString() + "]");
+                Log.w(DEBUG_TAG, "Failed to get provider at [" + calendars.toString() + "]");
             }
         }
         return managedCursor;

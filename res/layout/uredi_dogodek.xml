@@ -27,7 +27,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nov Dogodek"
+                    android:text="Urejanje Dogodka"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>
@@ -45,10 +45,13 @@
             android:layout_height="wrap_content"
             android:text="Koledar: " />
 
-        <Spinner
-            android:id="@+id/spinnerIzbiraKoledarja"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textViewImeKoledarja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -64,7 +67,7 @@
             android:text=" Naslov:" />
 
         <EditText
-            android:id="@+id/editTextDodajNaslov"
+            android:id="@+id/editTextSpremeniNaslov"
             android:layout_width="250px"
             android:layout_height="wrap_content" >
 
@@ -100,13 +103,14 @@
             android:text="Od:   " />
 
         <Button
-            android:id="@+id/buttonOdDatum"
+            android:id="@+id/buttonOdDatumSpremeni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Datum" android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:text="Datum" />
 
         <Button
-            android:id="@+id/buttonOdCas"
+            android:id="@+id/buttonOdCasSpremeni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"
@@ -127,16 +131,18 @@
             android:text="Do:   " />
 
         <Button
-            android:id="@+id/buttonDoDatum"
+            android:id="@+id/buttonDoDatumSpremeni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Datum" android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:text="Datum" />
 
         <Button
-            android:id="@+id/buttonDoCas"
+            android:id="@+id/buttonDoCasSpremeni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Čas" android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:text="Čas" />
 
     </LinearLayout>
 
@@ -163,13 +169,13 @@
             android:text="Lokacija:" />
 
         <EditText
-            android:id="@+id/EditTextLokacija"
+            android:id="@+id/EditTextSpremeniLokacija"
             android:layout_width="190px"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <CheckBox
-            android:id="@+id/checkBoxCeliDan"
+            android:id="@+id/checkBoxSpremeniCeliDan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -196,7 +202,7 @@
         android:layout_height="wrap_content" >
 
         <CheckBox
-            android:id="@+id/checkBoxopozorilo"
+            android:id="@+id/checkBoxSpremeniOpozorilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -204,7 +210,7 @@
             android:text="Opozorilo: " />
 
         <Spinner
-            android:id="@+id/spinnerOpozorilo"
+            android:id="@+id/spinnerSpremeniOpozorilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -222,7 +228,7 @@
         <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="      Opis:"></TextView>
 
         <EditText
-            android:id="@+id/editTextDodajOpis"
+            android:id="@+id/editTextSpremeniOpis"
             android:layout_width="250px"
             android:layout_height="100px" >
 </EditText>
@@ -242,12 +248,19 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/buttonShraniDogodek"
+            android:id="@+id/buttonUrediDogodek"
             android:layout_width="150px"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:text="Dodaj" >
+            android:text="Spremeni" >
 </Button>
+
+        <Button
+            android:id="@+id/buttonIzbrisiDogodek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Izbrisi" android:onClick="onClick"/>
+
     </LinearLayout>
     </LinearLayout>
     </ScrollView>

@@ -5,6 +5,10 @@ public class Koledar
 	public int id;
 	public String ime;
 	
+	public Koledar() 
+	{
+		
+	}
 	public Koledar(int id, String ime) 
 	{
 		this.id = id;

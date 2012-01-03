@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".KoledarDodajDogodekActivity" android:theme="@android:style/Theme.NoTitleBar"
+        <activity android:name=".BAZA.KoledarDodajDogodekActivity" android:theme="@android:style/Theme.NoTitleBar"
                   android:label="iManager - Dodaj Dogodek">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -95,8 +95,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalendarActivity" android:theme="@android:style/Theme.NoTitleBar"
+        <activity android:name=".Koledar.DodajanjeDogodkaVCalendarActivity" android:theme="@android:style/Theme.NoTitleBar"
                   android:label="iManager - Dodaj Dogodek">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Koledar.SeznamDogodkov" android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="iManager - Poglej Dogodek">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Koledar.UrediDogodekActivity" android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="iManager - Uredi Dogodek">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

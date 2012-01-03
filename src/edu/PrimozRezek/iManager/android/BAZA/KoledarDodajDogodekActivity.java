@@ -1,8 +1,9 @@
-package edu.PrimozRezek.iManager.android;
+package edu.PrimozRezek.iManager.android.BAZA;
 
 
-import edu.PrimozRezek.iManager.android.BAZA.DBAdapterKoledar;
-import edu.PrimozRezek.iManager.android.BAZA.KoledarBaza;
+import edu.PrimozRezek.iManager.android.R;
+import edu.PrimozRezek.iManager.android.R.id;
+import edu.PrimozRezek.iManager.android.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
