@@ -29,8 +29,7 @@ public class AlarmActivity extends Activity implements OnClickListener
 //	private PendingIntent mAlarmSender;
 
 	TimePicker tp1;
-	NotificationManager mNM;
-	TextView txtw1;
+	NotificationManager mNM; 
 	private PendingIntent mAlarmSender;
 	
 	
@@ -38,7 +37,7 @@ public class AlarmActivity extends Activity implements OnClickListener
 	
 	private void startPlaying() 
     {
-    	Intent i = new Intent(this, IzklopBudilkeActivity.class);
+    	Intent i = new Intent(this, FizicnaBudilkaActivity.class);
     	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	this.startActivity(i);
     }
@@ -53,7 +52,6 @@ public class AlarmActivity extends Activity implements OnClickListener
         
         setContentView(R.layout.nastavi_alarm);
 		
-        txtw1 = (TextView) findViewById(R.id.textViewAlarm);
         tp1 = (TimePicker) findViewById(R.id.timePickerAlarm);
         tp1.setIs24HourView(true);
         

@@ -20,6 +20,7 @@ package edu.PrimozRezek.iManager.android.Alarm;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -45,7 +46,6 @@ public class OdstevalnikService_Service extends Service {
         
         mNM.cancel(5432222);
 
-        Toast.makeText(this, "odstevalnik_service_finished", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -70,7 +70,28 @@ public class OdstevalnikService_Service extends Service {
      */
     private void startPlaying() 
     {
-    	Intent i = new Intent(this, IzklopOdstevalnikaActivity.class);
+    	//povemo kaj poganjamo, budilko ali odstevalnik
+    	SharedPreferences bud_ali_odst = getSharedPreferences("BUDILKA_ALI_ODSTEVALNIK", 0);
+        SharedPreferences.Editor editorIzbor = bud_ali_odst.edit();
+        editorIzbor.putString("ali_budilka_ali_odstevalnik", "odstevalnik");
+        editorIzbor.commit();
+    	
+		//nastavitve nastavim da je odstevalnik izklopljen
+		SharedPreferences odstevalnik_vklopljena = getSharedPreferences("ODSTEVALNIK_LAST_SET", 0);
+		SharedPreferences.Editor editor3 = odstevalnik_vklopljena.edit();
+		editor3.putBoolean("odstevalnik_vklopljen", false);
+		editor3.commit();
+		
+		
+    	SharedPreferences zadnje_nastavitve = getSharedPreferences("NASTAVITVE_APP_LAST_SET", 0);
+    	int izbor = zadnje_nastavitve.getInt("izbor_odstevalnik", 0);
+    	
+    	Intent i;
+
+    	if(izbor==1) i = new Intent(this, FizicnaBudilkaActivity.class);
+    	else if(izbor==2) i = new Intent(this, MatematicnaBudilkaActivity.class);
+    	else i = new Intent(this, NavadnaBudilkaActivity.class); //drugače navadn (0)
+    	
     	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	this.startActivity(i);
     }

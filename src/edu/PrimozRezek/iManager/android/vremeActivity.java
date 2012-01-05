@@ -46,6 +46,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -137,7 +139,7 @@ public class vremeActivity extends Activity implements OnClickListener
 	    {
 	    	//nazadnje osveženo:
 	    	SharedPreferences nazadnje_osvezeno = getSharedPreferences("VREME_OSVEZITEV", 0);
-	        textVievOsvezitev.setText(nazadnje_osvezeno.getString("nazadnje_osvezeno_vreme", " "));   
+	        textVievOsvezitev.setText("Nazadnje osveženo:\n"+nazadnje_osvezeno.getString("nazadnje_osvezeno_vreme", " "));   
 	        
 	    	
 	    		try 
@@ -371,7 +373,7 @@ public class vremeActivity extends Activity implements OnClickListener
 		}
 		
 
-		public String trenutniCasString()
+		public String trenutniCasString() 
 		{
 			Time now = new Time();
 			now.setToNow();
@@ -379,7 +381,7 @@ public class vremeActivity extends Activity implements OnClickListener
 	    	String minuta = now.minute+""; 
 	    	if(minuta.length()<2) minuta="0"+minuta;//vodilna ničla
 	    	
-	    	return (a.getTime().getDate()+"."+((int)(a.getTime().getMonth())+1)+" "+now.hour+":"+minuta);
+	    	return (a.getTime().getDate()+"/"+((int)(a.getTime().getMonth())+1)+"  "+now.hour+":"+minuta);
 		}
 		
 		
@@ -639,6 +641,35 @@ public class vremeActivity extends Activity implements OnClickListener
 	            Log.e("Exception",e.getMessage());
 	            return null;
 	        }
+	    }
+		
+		//meni
+	    @Override
+	    public boolean onCreateOptionsMenu(Menu menu) 
+	    {
+	    	menu.add(0,0,0,"Nastavitve").setIcon(R.drawable.nastavitve2);
+	    	menu.add(0,1,1,"Izhod").setIcon(R.drawable.izhod2);
+
+	    	return true;
+	    }
+	    
+	    @Override
+	    public boolean onOptionsItemSelected(MenuItem item) 
+	    {
+	    	switch (item.getItemId())
+	    	{
+	    	case 0: //nastavitve
+
+	    		Intent nastavitve = new Intent(vremeActivity.this, NastavitveActivity.class);
+	    		startActivity(nastavitve);
+
+	    	return true;
+	    	case 1: //izhod
+	    		finish();
+	    	return true;
+	    	}
+	    	
+	    	return false;
 	    }
 			
 }

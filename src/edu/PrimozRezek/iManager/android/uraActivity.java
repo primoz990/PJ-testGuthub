@@ -7,6 +7,8 @@ import java.util.TimeZone;
 
 import edu.PrimozRezek.iManager.android.Alarm.AlarmActivity;
 import edu.PrimozRezek.iManager.android.Alarm.AlarmService_Service;
+import edu.PrimozRezek.iManager.android.Alarm.MatematicnaBudilkaActivity;
+import edu.PrimozRezek.iManager.android.Alarm.NavadnaBudilkaActivity;
 import edu.PrimozRezek.iManager.android.Alarm.OdstevalnikActivity;
 import edu.PrimozRezek.iManager.android.Alarm.OdstevalnikService_Service;
 import android.app.Activity;
@@ -22,6 +24,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AnalogClock;
@@ -34,7 +38,8 @@ import android.widget.Toast;
 import android.widget.TimePicker.OnTimeChangedListener;
 
 
-public class uraActivity extends Activity implements OnClickListener {
+public class uraActivity extends Activity implements OnClickListener 
+{
 	
 
 	public static final int id=1;
@@ -42,7 +47,7 @@ public class uraActivity extends Activity implements OnClickListener {
 	//gumbi za preklaplanje med activity
 	Gumbi g;
 
-	LinearLayout mainLL;
+	LinearLayout mainLL;  
 	AnalogClock ura;
 	TextView textViev1;
 	CheckBox checkBoxBudilka, checkBoxOdstevalnik;
@@ -57,7 +62,7 @@ public class uraActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);  
        
         
         setContentView(R.layout.ura);  
@@ -81,8 +86,37 @@ public class uraActivity extends Activity implements OnClickListener {
 
         textViev1.setText(x+"/"+c);
         
-        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);	
+        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);	  
 
+    }
+    
+    //meni
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
+    	menu.add(0,0,0,"Nastavitve").setIcon(R.drawable.nastavitve2);
+    	menu.add(0,1,1,"Izhod").setIcon(R.drawable.izhod2);
+
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+    	switch (item.getItemId())
+    	{
+    	case 0: //nastavitve
+
+    		Intent nastavitve = new Intent(uraActivity.this, NastavitveActivity.class);
+    		startActivity(nastavitve);
+
+    	return true;
+    	case 1: //izhod
+    		finish();
+    	return true;
+    	}
+    	
+    	return false;
     }
     
 
@@ -266,6 +300,10 @@ public class uraActivity extends Activity implements OnClickListener {
 		        editor.putBoolean("odstevalnik_vklopljen", true);
 		        editor.commit();
 			}
+
+			
+		break;
+		case R.id.analogClock1:
 
 			
 		break;

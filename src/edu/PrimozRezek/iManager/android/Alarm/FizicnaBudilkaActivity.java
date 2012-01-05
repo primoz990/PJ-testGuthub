@@ -3,6 +3,7 @@ package edu.PrimozRezek.iManager.android.Alarm;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import edu.PrimozRezek.iManager.android.R;
 
@@ -12,11 +13,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,7 +36,7 @@ import android.widget.TextView;
 
 
 
-public class IzklopBudilkeActivity extends Activity 
+public class FizicnaBudilkaActivity extends Activity 
 {
 	TextView txtViewStevilo;
     
@@ -43,7 +47,7 @@ public class IzklopBudilkeActivity extends Activity
 	//TextView txtViev1;
 	public SensorManager SenMan;
 	public MediaPlayer mPlayer = null;
-	String PotDoMuzike= Environment.getExternalStorageDirectory().getAbsolutePath()+"/Paganini.mp3";
+	
 	double gravityX=0;
 	double gravityY=0;
 	double gravityZ=0;
@@ -107,7 +111,9 @@ public class IzklopBudilkeActivity extends Activity
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.budilka);
+        setContentView(R.layout.fizicna_budilka);
+        
+        
         
         txtViewStevilo = (TextView) findViewById(R.id.textViewKolikoKratSe);
         
@@ -122,17 +128,18 @@ public class IzklopBudilkeActivity extends Activity
         //odklep ekrana
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        
-      //nastavitve nastavim da je budilka izklopljena
-		SharedPreferences budilka_vklopljena = getSharedPreferences("BUDILKA_LAST_SET", 0);
-		SharedPreferences.Editor editor2 = budilka_vklopljena.edit();
-		editor2.putBoolean("budilka_vklopljena", false);
-		editor2.commit();
 
-		STEVILO_UDARCEV=5;
+        //preberem nastavitve
+        SharedPreferences bud_ali_odst = getSharedPreferences("BUDILKA_ALI_ODSTEVALNIK", 0);
+        String kajIzkljapljamo = bud_ali_odst.getString("ali_budilka_ali_odstevalnik", "budilka");
+        
+        SharedPreferences zadnje_nastavitve = getSharedPreferences("NASTAVITVE_APP_LAST_SET", 0);
+        STEVILO_UDARCEV = zadnje_nastavitve.getInt("st_udarcev_"+kajIzkljapljamo, 0); //preberemo st_udarcev za budilko ali za odstevalnik
+        Uri potdomuzike22 = Uri.parse(zadnje_nastavitve.getString("glasba_"+kajIzkljapljamo, "napaka")); //preberemo izbrano glasbo za budliko ali odstevalnik
+        
 		txtViewStevilo.setText(STEVILO_UDARCEV+"");
 		
-        startPlaying();
+        startPlaying(potdomuzike22);
     }
     
     @Override
@@ -147,31 +154,54 @@ public class IzklopBudilkeActivity extends Activity
     @Override
     protected void onStop() 
     {
-    	//shranivdat(rezultati);
     	SenMan.unregisterListener(SenLis);
     	mPlayer.release();
-    	//wakeL.release();
+    	wakeL.release();
     	super.onStop();
     }
     
-    private void startPlaying() 
-    {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(PotDoMuzike);
-            mPlayer.setLooping(true);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            //txtViev1.setText("napaka: ");
-        }
-    }
+
     
-    @Override
-    protected void onDestroy() {
-    	wakeL.release();
-    	super.onDestroy();
-    }
+private void startPlaying(Uri potDomuzike) 
+  {
+      mPlayer = new MediaPlayer();
+      try {
+    	  mPlayer.setDataSource(this, potDomuzike);
+          mPlayer.setLooping(true);
+          mPlayer.prepare();
+          mPlayer.start();
+      } catch (IOException e) 
+      {
+    	  startPlayingDefault();
+
+      }
+  }
+	
+    //če ni izbrane glasbe predvajamo svojo
+	private void startPlayingDefault() 
+	  {
+		mPlayer = new MediaPlayer();
+			try 
+		    {
+				//http://androidforums.com/developer-101/205744-play-sound-assets.html
+				AssetFileDescriptor descriptor = getAssets().openFd("paganini.mp3");
+				mPlayer.setDataSource( descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength() );
+				descriptor.close();
+				
+		        mPlayer.setLooping(true);
+				mPlayer.prepare();
+				mPlayer.start();
+		    } catch (IllegalStateException e1) 
+		    {
+		    	Log.e("Napaka", "Pri nalaganju glasbe");
+	        
+	        } catch (IOException e2) 
+	        {
+	        	Log.e("Napaka", "Pri nalaganju glasbe");
+	        }
+				
+			
+	  }
     
     
     

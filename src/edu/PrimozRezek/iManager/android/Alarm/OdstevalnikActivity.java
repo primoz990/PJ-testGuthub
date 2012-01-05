@@ -31,7 +31,6 @@ public class OdstevalnikActivity extends Activity implements OnClickListener
 
 	TimePicker tp1;
 	NotificationManager mNM;
-	TextView txtw1;
 	private PendingIntent mAlarmSender;
 	
 	
@@ -39,7 +38,7 @@ public class OdstevalnikActivity extends Activity implements OnClickListener
 	
 	private void startPlaying() 
     {
-    	Intent i = new Intent(this, IzklopBudilkeActivity.class);
+    	Intent i = new Intent(this, FizicnaBudilkaActivity.class);
     	i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	this.startActivity(i);
     }
@@ -54,7 +53,6 @@ public class OdstevalnikActivity extends Activity implements OnClickListener
         
         setContentView(R.layout.nastavi_odstevalnik);
 		
-        txtw1 = (TextView) findViewById(R.id.textViewOdstevalnik);
         tp1 = (TimePicker) findViewById(R.id.timePickerOdstevalnik);
         tp1.setIs24HourView(true);
         

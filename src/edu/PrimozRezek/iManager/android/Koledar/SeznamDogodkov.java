@@ -61,7 +61,7 @@ public class SeznamDogodkov extends Activity
         		pk.setIzbranDogodekZaUrejanje(g.id);
               
         		odpriUrejanjeDogodka();
-        		Toast.makeText(getApplicationContext(), ((TextView) view).getText()+" "+ id+" "+g.id ,Toast.LENGTH_SHORT).show();
+        		//Toast.makeText(getApplicationContext(), ((TextView) view).getText()+" "+ id+" "+g.id ,Toast.LENGTH_SHORT).show();
         		finish();
         		}
             }

@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ozadje"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textViewKolikoKratSe"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Budilka" android:textSize="50px"/>
+        android:background="@drawable/gumb_izklopi_budilko"
+        android:onClick="onClick"
+        android:text="Izklopi" android:textSize="30px"/>
 
 </LinearLayout>

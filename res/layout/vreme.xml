@@ -78,7 +78,7 @@
 					    <LinearLayout
 					        android:id="@+id/linearLayout1"
 					        android:layout_width="match_parent"
-					        android:layout_height="85px"
+					        android:layout_height="75px"
 					        android:gravity="center"
 					        android:orientation="horizontal" >
 
@@ -93,8 +93,10 @@
 					                android:id="@+id/textViewNazadnjeOsvezenoVreme"
 					                android:layout_width="wrap_content"
 					                android:layout_height="wrap_content"
+					                android:gravity="center"
 					                android:text="Medium Text"
-					                android:textAppearance="?android:attr/textAppearanceSmall" />
+					                android:textAppearance="?android:attr/textAppearanceSmall"
+					                android:textColor="@color/rumena" android:textSize="12px"/>
 
 					        </LinearLayout>
 

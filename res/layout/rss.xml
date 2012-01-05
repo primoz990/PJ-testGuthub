@@ -24,26 +24,18 @@
 
 	        </LinearLayout>
 	
-	        <Button
-	            android:id="@+id/buttonOsveziRSS"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:onClick="onClick"
-	            android:text="Osvezi" />
-	
 	    </LinearLayout>
 
 	    <LinearLayout
 	        android:id="@+id/linearLayout3"
 	        android:layout_width="match_parent"
-	        android:layout_height="50px"
-	        android:gravity="right"
-	        android:orientation="vertical" >
+	        android:layout_height="wrap_content"
+	        android:gravity="center|right"
+	        android:orientation="horizontal" >
 
 	        <LinearLayout
 	            android:id="@+id/LinearLayout01"
-	            android:layout_width="250px"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:gravity="center"
 	            android:orientation="vertical" >
@@ -53,19 +45,66 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:text="Medium Text"
-	                android:textAppearance="?android:attr/textAppearanceSmall" />
+	                android:textAppearance="?android:attr/textAppearanceSmall" android:textColor="@color/rumena"/>
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/linearLayout4"
+	            android:layout_width="15px"
+	            android:layout_height="match_parent" >
+	        </LinearLayout>
+
+	        <Button
+	            android:id="@+id/buttonOsveziRSS"
+	            android:layout_width="80px"
+	            android:layout_height="40px"
+	            android:onClick="onClick"
+	            android:text="Osveži" />
+
+	        <LinearLayout
+	            android:id="@+id/LinearLayout02"
+	            android:layout_width="10px"
+	            android:layout_height="match_parent" >
 	        </LinearLayout>
 
 	    </LinearLayout>
-	
-	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
 	    <LinearLayout
-	        android:id="@+id/linearLayout1RSS"
+	        android:id="@+id/linearLayout6"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:orientation="vertical" >
+	        android:orientation="horizontal" >
+
+	        <LinearLayout
+	            android:id="@+id/linearLayout8"
+	            android:layout_width="8px"
+	            android:layout_height="match_parent"
+	            android:orientation="vertical" >
+	        </LinearLayout>
+
+	        <LinearLayout
+	            android:id="@+id/linearLayout7"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+
+	            <ScrollView
+	                xmlns:android="http://schemas.android.com/apk/res/android"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content" >
+
+	                <LinearLayout
+	                    android:id="@+id/linearLayout1RSS"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    android:gravity="center_vertical"
+	                    android:orientation="vertical" >
+
+	                </LinearLayout>
+	            </ScrollView>
+
+	        </LinearLayout>
+
 	    </LinearLayout>
-	</ScrollView>
+
 	</LinearLayout>

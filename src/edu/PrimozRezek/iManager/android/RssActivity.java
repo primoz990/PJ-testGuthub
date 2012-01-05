@@ -36,14 +36,20 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,6 +109,8 @@ public class RssActivity extends Activity implements OnClickListener
 	public NodeList linki;
 	public NodeList novice;
 	TextView[] poljeTxtViev;
+	ImageView[] iv;
+	
 	LinearLayout LLG;
 	int velikostNovic=0;
 	
@@ -124,8 +132,7 @@ public class RssActivity extends Activity implements OnClickListener
         txtViev1=(TextView) findViewById(R.id.textViewRSS1);
         txtViewNazadnjeOsvezeno=(TextView) findViewById(R.id.textViewNazadnjeOsvezeneNovice);
         gumbOsvezi = (Button) findViewById(R.id.buttonOsveziRSS);
-        
-        
+
         naloziNoviceIzDat();
         
         
@@ -154,15 +161,22 @@ public class RssActivity extends Activity implements OnClickListener
     		LLG = (LinearLayout) findViewById(R.id.linearLayout1RSS); //new LinearLayout(this);
     		LLG.removeAllViewsInLayout(); //počistim
     		
+    		iv = new ImageView[velikostNovic];//črte med texView-i
+    		
             for (int i = 0; i < SeznamNovic.size(); i++)//od 1 naprej ker je prvi naslov UM-FERI - Novice... 
             {
             	Novica nov = (Novica) SeznamNovic.get(i);
 
                 poljeTxtViev[i] = new TextView(RssActivity.this);
                 poljeTxtViev[i].setText(nov.getNaslov());
-                poljeTxtViev[i].setHeight(40);
+                poljeTxtViev[i].setHeight(50);
+                poljeTxtViev[i].setGravity(Gravity.CENTER_VERTICAL);
                 poljeTxtViev[i].setId(i);
 
+                iv[i] = new ImageView(RssActivity.this);//črte med texView-i
+	            iv[i].setImageResource(R.drawable.crta);//črte med texView-i
+	            LLG.addView(iv[i]);//črte med texView-i
+                
                 LLG.addView(poljeTxtViev[i]);
                 
                 
@@ -277,6 +291,12 @@ public class RssActivity extends Activity implements OnClickListener
 				poljeTxtViev = new TextView[novice.getLength()];
 				LLG = (LinearLayout) findViewById(R.id.linearLayout1RSS); //new LinearLayout(this);
 				LLG.removeAllViewsInLayout(); //počistim
+				
+		        iv = new ImageView[novice.getLength()];//črte med texView-i
+		        
+				 
+				SeznamNovic.clear();
+				
 		        for (int i = 1; i < novice.getLength(); i++)//od 1 naprej ker je prvi naslov UM-FERI - Novice... 
 		        {
 		            Node node = novice.item(i);
@@ -284,11 +304,16 @@ public class RssActivity extends Activity implements OnClickListener
 	
 		            poljeTxtViev[i-1] = new TextView(RssActivity.this);
 		            poljeTxtViev[i-1].setText(node.getTextContent());
-		            poljeTxtViev[i-1].setHeight(40);
+		            poljeTxtViev[i-1].setHeight(50);
+		            poljeTxtViev[i-1].setGravity(Gravity.CENTER_VERTICAL);
 		            poljeTxtViev[i-1].setId(i);
 		            
 		            SeznamNovic.add(new Novica(node.getTextContent(), link.getTextContent())); //hranim novice v seznam
 	
+		            iv[i-1] = new ImageView(RssActivity.this);//črte med texView-i
+		            iv[i-1].setImageResource(R.drawable.crta);//črte med texView-i
+		            LLG.addView(iv[i-1]);//črte med texView-i
+		           
 		            LLG.addView(poljeTxtViev[i-1]);
 		            
 		            poljeTxtViev[i-1].setOnClickListener(new View.OnClickListener() {
@@ -314,6 +339,7 @@ public class RssActivity extends Activity implements OnClickListener
 		        editor.putString("nazadnje_osvezene_novice", trenutniCasString());
 		        editor.commit();
 		        
+		        shraniNoviceVDat();
 		        
 		        Toast.makeText(RssActivity.this,"Končano",Toast.LENGTH_SHORT).show();
 			}
@@ -342,21 +368,12 @@ public class RssActivity extends Activity implements OnClickListener
 	}
 	
 	
-	@Override
-	protected void onStop() 
-	{
-		shraniNoviceVDat();
-		super.onStop();
-	}
-	
-	
 	public void shranivdat(String vsebina, String path) //http://www.roseindia.net/java/beginners/java-write-to-file.shtml
 	 {
 		try
 		{
 			File pot = new File("/mnt/sdcard/iManager/");
-			pot.mkdirs();
-			
+			pot.mkdirs();  
 			
 			FileWriter fstream = new FileWriter(pot.getPath()+"/"+path);
 			BufferedWriter out = new BufferedWriter(fstream);
@@ -394,6 +411,34 @@ public class RssActivity extends Activity implements OnClickListener
        return nodes;
 	}
 	
+	//meni
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
+    	menu.add(0,0,0,"Nastavitve").setIcon(R.drawable.nastavitve2);
+    	menu.add(0,1,1,"Izhod").setIcon(R.drawable.izhod2);
+
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+    	switch (item.getItemId())
+    	{
+    	case 0: //nastavitve
+
+    		Intent nastavitve = new Intent(RssActivity.this, NastavitveActivity.class);
+    		startActivity(nastavitve);
+
+    	return true;
+    	case 1: //izhod
+    		finish();
+    	return true;
+    	}
+    	
+    	return false;
+    }
 	
 	
 //	PUBLIC VOID OSVEZINOVICE()

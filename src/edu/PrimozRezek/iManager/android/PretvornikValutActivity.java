@@ -15,6 +15,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -214,7 +216,34 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 	}
 	
 	
-	
+	//meni
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
+    	menu.add(0,0,0,"Nastavitve").setIcon(R.drawable.nastavitve2);
+    	menu.add(0,1,1,"Izhod").setIcon(R.drawable.izhod2);
+
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+    	switch (item.getItemId())
+    	{
+    	case 0: //nastavitve
+
+    		Intent nastavitve = new Intent(PretvornikValutActivity.this, NastavitveActivity.class);
+    		startActivity(nastavitve);
+
+    	return true;
+    	case 1: //izhod
+    		finish();
+    	return true;
+    	}
+    	
+    	return false;
+    }
 
 	
 	@Override

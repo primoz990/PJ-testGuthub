@@ -14,4 +14,5 @@
 <color name="static_text_color">#003366</color>
 <color name="journal_entry_listitem_text_color">#003366</color>
 <color name="note_text_disabled">#333333</color>
+<color name="rumena">#ffdf00</color>
 </resources>
