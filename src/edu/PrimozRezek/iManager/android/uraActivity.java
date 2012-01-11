@@ -149,19 +149,18 @@ public class uraActivity extends Activity implements OnClickListener
 
 
 	@Override
-	public void onClick(View v) 
+	public void onClick(View v)  
 	{
 
 		switch(v.getId())
 		{
 		case R.id.buttonBujenje: 
-			
 
 			Intent dodajAct = new Intent(this, AlarmActivity.class);
 			this.startActivity(dodajAct);
 
 		break;
-		case R.id.buttonPocitek: 
+		case R.id.buttonPocitek:   
 
 			Intent odstevalnik = new Intent(this, OdstevalnikActivity.class);
 			this.startActivity(odstevalnik);
