@@ -15,4 +15,6 @@
 <color name="journal_entry_listitem_text_color">#003366</color>
 <color name="note_text_disabled">#333333</color>
 <color name="rumena">#ffdf00</color>
+<color name="rdeca">#FF0000</color>
+<color name="zelena">#8ad93d</color>
 </resources>

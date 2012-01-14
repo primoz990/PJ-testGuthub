@@ -417,11 +417,16 @@ public class koledarActivity extends Activity implements OnClickListener
 					
 					
 					List dogodkiZaTaMesec = IzlusciDogodkeZatrenutniMesec(currentMonth, yy-1900); //seznam dogodkov za ta mesec
+					//današnji datum - za barvanje
+					Date aktualniMesec = new Date(System.currentTimeMillis());
+					int aktMesec = aktualniMesec.getMonth();
+					int aktLeto = aktualniMesec.getYear()+1900;
+					
 					// Current Month Days
 					for (int i = 1; i <= daysInMonth; i++)
 						{
 //							Log.d(currentMonthName, String.valueOf(i) + " " + getMonthAsString(currentMonth) + " " + yy);
-							if (i == getCurrentDayOfMonth())
+							if (i == getCurrentDayOfMonth() && currentMonth == aktMesec && aktLeto == yy)
 								{
 									list.add(String.valueOf(i) + "-BLUE" + "-" + getMonthAsString(currentMonth) + "-" + yy); //današnji dan
 									
@@ -555,21 +560,21 @@ public class koledarActivity extends Activity implements OnClickListener
 
 					if (day_color[1].equals("GREY"))
 						{
-							gridcell.setTextColor(Color.LTGRAY);
-						}
+							gridcell.setTextColor(Color.DKGRAY);
+						}  
 					if (day_color[1].equals("WHITE"))
 						{
 							gridcell.setTextColor(Color.WHITE);
 						}
 					if (day_color[1].equals("BLUE"))
 						{
-							gridcell.setTextColor(getResources().getColor(R.color.static_text_color));
+							gridcell.setTextColor(getResources().getColor(R.color.zelena));
 						}
 					
 					//!!!tukaj barvanje dogodkov
-					if (day_color[1].equals("WHITEvent"))
+					if (day_color[1].equals("WHITEvent"))    
 					{
-						gridcell.setTextColor(R.color.black);
+						gridcell.setTextColor(Color.RED);  
 					}
 					
 					

@@ -8,4 +8,4 @@
 		android:drawable="@drawable/calendar_bg_orange" /> <!-- focused -->
 	<item
 		android:drawable="@drawable/calendar_tile_small" /> <!-- default -->
-</selector>
+</selector>  

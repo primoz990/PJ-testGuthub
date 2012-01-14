@@ -13,6 +13,7 @@ import edu.PrimozRezek.iManager.android.Alarm.OdstevalnikActivity;
 import edu.PrimozRezek.iManager.android.Alarm.OdstevalnikService_Service;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -43,6 +44,10 @@ public class uraActivity extends Activity implements OnClickListener
 	
 
 	public static final int id=1;
+
+	private static final int TIME_DIALOG_BUDILKA = 0;
+
+	private static final int TIME_DIALOG_ODSTEVALNIK = 1;
 
 	//gumbi za preklaplanje med activity
 	Gumbi g;
@@ -328,7 +333,55 @@ public class uraActivity extends Activity implements OnClickListener
         mNM.notify(id, notification);
     }
 	
-	
+
+//	private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() 
+//	{
+//		@Override
+//		public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+//		{
+//			Od.setHours(hourOfDay);
+//			Od.setMinutes(minute);
+//			
+//			String min = minute+"";
+//			if(min.length()<2) min="0"+min;
+//			gumbCasOd.setText(hourOfDay+":"+min);
+//			
+//		}
+//	};
+//	
+//	private TimePickerDialog.OnTimeSetListener mTimeSetListener2 = new TimePickerDialog.OnTimeSetListener() 
+//	{
+//		@Override
+//		public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+//		{
+//			Od.setHours(hourOfDay);
+//			Od.setMinutes(minute);
+//			
+//			String min = minute+"";
+//			if(min.length()<2) min="0"+min;
+//			gumbCasOd.setText(hourOfDay+":"+min);
+//			
+//		}
+//		
+//		
+//	
+//	};
+//	
+//	@Override
+//	protected Dialog onCreateDialog(int id) 
+//	{
+//		switch (id) 
+//		{
+//		case TIME_DIALOG_BUDILKA:
+//			//return new TimePickerDialog(this, mTimeSetListener, Od.getHours(), Od.getMinutes(), true);
+//		break;
+//		case TIME_DIALOG_ODSTEVALNIK:
+//			//return new TimePickerDialog(this, mTimeSetListener2, Do.getHours(), Do.getMinutes(), true);
+//		break;
+//
+//		}
+//	return null;
+//	}
 	
 	
 	

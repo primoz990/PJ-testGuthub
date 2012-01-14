@@ -256,12 +256,12 @@ public class NastavitveActivity extends Activity implements OnClickListener, See
 		    startActivityForResult(Intent.createChooser(intent2, "Izberi zvonenje"), REQUEST_CODE_IZBOR_MUZIKE_ZA_ODSTEVALNIK);
 			
 		break;
-		case R.id.buttonUstvariBackup:
-			
-			
-			
-			
-		break;
+//		case R.id.buttonUstvariBackup:
+//			
+//			
+//			
+//			
+//		break;
 		
 		}
 		

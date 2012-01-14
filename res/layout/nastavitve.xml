@@ -324,89 +324,90 @@
 
         </LinearLayout>
 
-            <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Backup"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <LinearLayout
-            android:id="@+id/LinearLayout03"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/LinearLayout04"
-                android:layout_width="30px"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LinearLayout02"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Podatki"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxBudilka"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Budilka" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxOdstevalnik"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Odstevalnik" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxPretvornikValut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pretvornik valut" />
-
-                <TextView
-                    android:id="@+id/textViewOPOZORILO"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="OPOZORILO!"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <Button
-                        android:id="@+id/buttonUstvariBackup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ustvari Varnostno Kopijo Podatkov" android:onClick="onClick"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
+<!--        <LinearLayout-->
+<!--        android:id="@+id/linearLayout1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical" >-->
+<!---->
+<!--        <TextView-->
+<!--            android:id="@+id/textView1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Backup"-->
+<!--            android:textAppearance="?android:attr/textAppearanceLarge" />-->
+<!---->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/LinearLayout03"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" >-->
+<!---->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/LinearLayout04"-->
+<!--                android:layout_width="30px"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical" >-->
+<!--            </LinearLayout>-->
+<!---->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/LinearLayout02"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical" >-->
+<!---->
+<!--                <TextView-->
+<!--                    android:id="@+id/TextView02"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Podatki"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceMedium" />-->
+<!---->
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBoxBudilka"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Budilka" />-->
+<!---->
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBoxOdstevalnik"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Odstevalnik" />-->
+<!---->
+<!--                <CheckBox-->
+<!--                    android:id="@+id/checkBoxPretvornikValut"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Pretvornik valut" />-->
+<!---->
+<!--                <TextView-->
+<!--                    android:id="@+id/textViewOPOZORILO"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="OPOZORILO!"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceSmall" />-->
+<!---->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/linearLayout14"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="horizontal" >-->
+<!---->
+<!--                    <Button-->
+<!--                        android:id="@+id/buttonUstvariBackup"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Ustvari Varnostno Kopijo Podatkov" android:onClick="onClick"/>-->
+<!---->
+<!--                </LinearLayout>-->
+<!---->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!---->
+<!--    </LinearLayout>-->
+    
     </LinearLayout>
 
     

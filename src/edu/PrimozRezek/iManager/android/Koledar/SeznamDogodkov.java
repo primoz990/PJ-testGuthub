@@ -55,15 +55,15 @@ public class SeznamDogodkov extends Activity
         for(int i=1; i<=seznam.size();i++)
         {
         	Dogodek k = (Dogodek) seznam.get(i-1);
-        	dogodki[i]=k.naslov;
+        	dogodki[i]=k.naslov; 
         	
         }
         
         adapter.setData(dogodki);
         lv.setAdapter(adapter);
         
-        ActionItem uredi 		= new ActionItem(ID_UREDI, "Uredi", getResources().getDrawable(R.drawable.ic_add));
-		ActionItem izbrisi 	= new ActionItem(ID_IZBRISI, "Izbrisi", getResources().getDrawable(R.drawable.ic_accept));
+        ActionItem uredi 		= new ActionItem(ID_UREDI, "Uredi", getResources().getDrawable(R.drawable.ic_nastavitve));
+		ActionItem izbrisi 	= new ActionItem(ID_IZBRISI, "Izbrisi", getResources().getDrawable(R.drawable.ic_brisi));
 		
 		final QuickAction mQuickAction 	= new QuickAction(this);
 		
