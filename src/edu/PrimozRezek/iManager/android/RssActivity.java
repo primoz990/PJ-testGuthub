@@ -263,7 +263,8 @@ public class RssActivity extends Activity implements OnClickListener
 		@Override
 		protected void onPreExecute() 
 		{
-			dialogWait = ProgressDialog.show(RssActivity.this, "Osveževanje", "Prosim počakajte...", true);
+			dialogWait = ProgressDialog.show(RssActivity.this, "", "Osveževanje. Prosim počakajte...", true, false);
+
 		}
 		
 		
@@ -275,7 +276,7 @@ public class RssActivity extends Activity implements OnClickListener
 				novice = PoisciNaNetu("http://www.feri.uni-mb.si/rss/novice.xml", "//title");
 				linki = PoisciNaNetu("http://www.feri.uni-mb.si/rss/novice.xml", "//link");
 			} catch (Exception e) {
-				return "NOK";
+				return "NOK"; 
 			}
 			
 			

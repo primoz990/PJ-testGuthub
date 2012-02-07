@@ -155,7 +155,7 @@ public class PretvornikValutActivity extends Activity implements OnClickListener
 		@Override
 		protected void onPreExecute() 
 		{
-			dialogWait = ProgressDialog.show(PretvornikValutActivity.this, "Osveževanje", "Prosim počakajte...", true);
+			dialogWait = ProgressDialog.show(PretvornikValutActivity.this, "", " Pretvarjam. Prosim počakajte...", true, false);
 		}
 		
 		double faktor;

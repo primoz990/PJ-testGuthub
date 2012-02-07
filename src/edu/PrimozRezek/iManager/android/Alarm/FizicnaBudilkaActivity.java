@@ -43,6 +43,7 @@ public class FizicnaBudilkaActivity extends Activity
 	//vklop ekrana
 	PowerManager powMaN;
 	WakeLock wakeL;
+	Window window;
 
 	//TextView txtViev1;
 	public SensorManager SenMan;
@@ -78,7 +79,8 @@ public class FizicnaBudilkaActivity extends Activity
 				//txtViev1.setText("Gx: "+(int)Gx+"\nGy: "+(int)Gy+"\nGz: "+(int)Gz);
 				rezultati+="Gx: "+(int)Gx+"  Gy: "+(int)Gy+"  Gz: "+(int)Gz+"\n";
 				
-				if((Gx>5 && Gy>5) || (Gx<-5 && Gy<-5) || (Gx<-5 && Gy>5) || (Gx>5 && Gy<-5)) 
+				//if((Gx>3 && Gy>3) || (Gx<-3 && Gy<-3) || (Gx<-3 && Gy>3) || (Gx>3 && Gy<-3)) 
+				if(Gx>4)
 				{
 					stevecUdarcev++;
 					if(stevecUdarcev<STEVILO_UDARCEV)
@@ -126,8 +128,8 @@ public class FizicnaBudilkaActivity extends Activity
         wakeL.acquire();
 
         //odklep ekrana
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);  
 
         //preberem nastavitve
         SharedPreferences bud_ali_odst = getSharedPreferences("BUDILKA_ALI_ODSTEVALNIK", 0);
@@ -155,7 +157,7 @@ public class FizicnaBudilkaActivity extends Activity
     protected void onStop() 
     {
     	SenMan.unregisterListener(SenLis);
-    	mPlayer.release();
+    	mPlayer.release(); 
     	wakeL.release();
     	super.onStop();
     }

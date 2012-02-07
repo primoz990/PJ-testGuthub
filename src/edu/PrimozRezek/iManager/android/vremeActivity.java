@@ -224,7 +224,8 @@ public class vremeActivity extends Activity implements OnClickListener
 			@Override
 			protected void onPreExecute() 
 			{
-				dialogWait = ProgressDialog.show(vremeActivity.this, "Osveževanje", "Prosim počakajte...", true);
+				dialogWait = ProgressDialog.show(vremeActivity.this, "", "Osveževanje. Prosim počakajte...", true, false);
+
 			}
 			
 			Node temperatura;

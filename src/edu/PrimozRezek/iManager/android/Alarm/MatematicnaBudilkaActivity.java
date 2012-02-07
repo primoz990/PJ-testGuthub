@@ -56,7 +56,7 @@ public class MatematicnaBudilkaActivity extends Activity implements OnClickListe
 
         //odklep ekrana
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED); 
         
       //preberem nastavitve
         SharedPreferences bud_ali_odst = getSharedPreferences("BUDILKA_ALI_ODSTEVALNIK", 0);
